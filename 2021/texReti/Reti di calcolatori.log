@@ -1,0 +1,685 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.6.29)  12 NOV 2021 15:22
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"Reti di calcolatori.tex"
+(./Reti di calcolatori.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18>
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/size11.clo
+File: size11.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count179
+\c@section=\count180
+\c@subsection=\count181
+\c@subsubsection=\count182
+\c@paragraph=\count183
+\c@subparagraph=\count184
+\c@figure=\count185
+\c@table=\count186
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count187
+\Gm@cntv=\count188
+\c@Gm@tempcnt=\count189
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks16
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen147
+\Gin@req@width=\dimen148
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks17
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/local/texlive/2021/texmf-dist/tex/latex/caption/subcaption.sty
+Package: subcaption 2020/10/07 v1.3j Sub-captions (AR)
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen149
+\captionmargin@=\dimen150
+\captionwidth=\dimen151
+\caption@tempdima=\dimen152
+\caption@indent=\dimen153
+\caption@parindent=\dimen154
+\caption@hangindent=\dimen155
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count190
+\c@continuedfloat=\count191
+)
+\c@subfigure=\count192
+\c@subtable=\count193
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count194
+\float@exts=\toks18
+\float@box=\box47
+\@float@everytoks=\toks19
+\@floatcapt=\box48
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count195
+\l__pdf_internal_box=\box49
+)
+(./Reti di calcolatori.aux)
+\openout1 = `"Reti di calcolatori.aux"'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(92.14519pt, 430.00462pt, 92.14519pt)
+* v-part:(T,H,B)=(95.39737pt, 556.47656pt, 143.09605pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=430.00462pt
+* \textheight=556.47656pt
+* \oddsidemargin=19.8752pt
+* \evensidemargin=19.8752pt
+* \topmargin=-13.87262pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=11.0pt
+* \footskip=30.0pt
+* \marginparwidth=59.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count196
+\scratchdimen=\dimen156
+\scratchbox=\box50
+\nofMPsegments=\count197
+\nofMParguments=\count198
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count199
+\MPscratchDim=\dimen157
+\MPnumerator=\count266
+\makeMPintoPDFobject=\count267
+\everyMPtoPDFconversion=\toks21
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
+
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
+
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--39
+
+ []
+
+[1
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<./images//ack.png, id=11, 191.71625pt x 94.3525pt>
+File: ./images//ack.png Graphic file (type png)
+<use ./images//ack.png>
+Package pdftex.def Info: ./images//ack.png  used on input line 57.
+(pdftex.def)             Requested size: 115.03062pt x 56.61192pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--64
+
+ []
+
+<./images//3.png, id=13, 502.87875pt x 306.14375pt>
+File: ./images//3.png Graphic file (type png)
+<use ./images//3.png>
+Package pdftex.def Info: ./images//3.png  used on input line 65.
+(pdftex.def)             Requested size: 301.72957pt x 183.68765pt.
+[2 <./images//ack.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 76--77
+
+ []
+
+<./images//package.png, id=24, 397.485pt x 109.40875pt>
+File: ./images//package.png Graphic file (type png)
+<use ./images//package.png>
+Package pdftex.def Info: ./images//package.png  used on input line 78.
+(pdftex.def)             Requested size: 238.49283pt x 65.64574pt.
+<./images//cs.png, id=25, 634.37pt x 315.1775pt>
+File: ./images//cs.png Graphic file (type png)
+<use ./images//cs.png>
+Package pdftex.def Info: ./images//cs.png  used on input line 87.
+(pdftex.def)             Requested size: 215.0023pt x 106.82228pt.
+<./images//cs2.png, id=26, 499.8675pt x 388.45125pt>
+File: ./images//cs2.png Graphic file (type png)
+<use ./images//cs2.png>
+Package pdftex.def Info: ./images//cs2.png  used on input line 91.
+(pdftex.def)             Requested size: 171.99922pt x 133.66017pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--93
+
+ []
+
+[3 <./images//3.png> <./images//package.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 95--102
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--102
+
+ []
+
+<./images//osi.png, id=33, 542.025pt x 303.1325pt>
+File: ./images//osi.png Graphic file (type png)
+<use ./images//osi.png>
+Package pdftex.def Info: ./images//osi.png  used on input line 103.
+(pdftex.def)             Requested size: 325.2175pt x 181.8809pt.
+[4 <./images//cs.png> <./images//cs2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--120
+
+ []
+
+[5 <./images//osi.png>]
+<./images//req.png, id=43, 556.0775pt x 320.19624pt>
+File: ./images//req.png Graphic file (type png)
+<use ./images//req.png>
+Package pdftex.def Info: ./images//req.png  used on input line 121.
+(pdftex.def)             Requested size: 389.25159pt x 224.13583pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--125
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 123--125
+
+ []
+
+[6 <./images//req.png>]
+<./images//dll.png, id=48, 386.44376pt x 310.15875pt>
+File: ./images//dll.png Graphic file (type png)
+<use ./images//dll.png>
+Package pdftex.def Info: ./images//dll.png  used on input line 129.
+(pdftex.def)             Requested size: 193.2214pt x 155.079pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--134
+
+ []
+
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 1
+35.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
+<./images//dll2.png, id=49, 290.08376pt x 86.3225pt>
+File: ./images//dll2.png Graphic file (type png)
+<use ./images//dll2.png>
+Package pdftex.def Info: ./images//dll2.png  used on input line 136.
+(pdftex.def)             Requested size: 145.04152pt x 43.16113pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--146
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--146
+
+ []
+
+[7 <./images//dll.png> <./images//dll2.png>]
+<./images//l2.png, id=57, 243.91125pt x 119.44624pt>
+File: ./images//l2.png Graphic file (type png)
+<use ./images//l2.png>
+Package pdftex.def Info: ./images//l2.png  used on input line 147.
+(pdftex.def)             Requested size: 146.34787pt x 71.66829pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 149--153
+
+ []
+
+<./images//ack1.png, id=58, 287.0725pt x 158.5925pt>
+File: ./images//ack1.png Graphic file (type png)
+<use ./images//ack1.png>
+Package pdftex.def Info: ./images//ack1.png  used on input line 154.
+(pdftex.def)             Requested size: 172.24483pt x 95.15622pt.
+<./images//ack2.png, id=59, 274.02374pt x 164.615pt>
+File: ./images//ack2.png Graphic file (type png)
+<use ./images//ack2.png>
+Package pdftex.def Info: ./images//ack2.png  used on input line 158.
+(pdftex.def)             Requested size: 164.41551pt x 98.76976pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 160--162
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 160--162
+
+ []
+
+[8 <./images//l2.png> <./images//ack1.png> <./images//ack2.png>]
+<./images//dll3.png, id=66, 223.83624pt x 105.39375pt>
+File: ./images//dll3.png Graphic file (type png)
+<use ./images//dll3.png>
+Package pdftex.def Info: ./images//dll3.png  used on input line 169.
+(pdftex.def)             Requested size: 215.0023pt x 101.23633pt.
+<./images//dll4.png, id=67, 272.01625pt x 72.27pt>
+File: ./images//dll4.png Graphic file (type png)
+<use ./images//dll4.png>
+Package pdftex.def Info: ./images//dll4.png  used on input line 173.
+(pdftex.def)             Requested size: 171.99922pt x 45.69905pt.
+<./images//ex3.png, id=68, 468.75125pt x 107.40125pt>
+File: ./images//ex3.png Graphic file (type png)
+<use ./images//ex3.png>
+Package pdftex.def Info: ./images//ex3.png  used on input line 180.
+(pdftex.def)             Requested size: 375.0015pt x 85.9211pt.
+<./images//ex1.png, id=69, 252.945pt x 250.9375pt>
+File: ./images//ex1.png Graphic file (type png)
+<use ./images//ex1.png>
+Package pdftex.def Info: ./images//ex1.png  used on input line 185.
+(pdftex.def)             Requested size: 171.99922pt x 170.63522pt.
+<./images//ex2.png, id=70, 154.5775pt x 89.33376pt>
+File: ./images//ex2.png Graphic file (type png)
+<use ./images//ex2.png>
+Package pdftex.def Info: ./images//ex2.png  used on input line 189.
+(pdftex.def)             Requested size: 171.99922pt x 99.41107pt.
+ [9 <./images//dll3.png> <./images//dll4.png> <./images//ex3.png>]
+<./images//m1.png, id=77, 494.84875pt x 481.8pt>
+File: ./images//m1.png Graphic file (type png)
+<use ./images//m1.png>
+Package pdftex.def Info: ./images//m1.png  used on input line 194.
+(pdftex.def)             Requested size: 247.42377pt x 240.8994pt.
+ [10 <./images//ex1.png> <./images//ex2.png> <./images//m1.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 205--208
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--212
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--212
+
+ []
+
+<./images//nak.png, id=85, 566.115pt x 435.6275pt>
+File: ./images//nak.png Graphic file (type png)
+<use ./images//nak.png>
+Package pdftex.def Info: ./images//nak.png  used on input line 216.
+(pdftex.def)             Requested size: 283.05681pt x 217.81322pt.
+[11 <./images//nak.png>]
+<./images//nak2.png, id=90, 526.96875pt x 423.5825pt>
+File: ./images//nak2.png Graphic file (type png)
+<use ./images//nak2.png>
+Package pdftex.def Info: ./images//nak2.png  used on input line 223.
+(pdftex.def)             Requested size: 263.48372pt x 211.79073pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--232
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 234--238
+
+ []
+
+[12 <./images//nak2.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 240--244
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--252
+
+ []
+
+
+Overfull \hbox (4.58926pt too wide) in paragraph at lines 248--252
+\OT1/cmr/m/n/10.95 ed il ten-ta-tivo di trasmis-sione ^^Re con-tinuo) o non-per
+sistente (i ten-ta-tivi di ri-tramissione
+ []
+
+[13]
+<./images//manch.png, id=99, 491.8375pt x 331.2375pt>
+File: ./images//manch.png Graphic file (type png)
+<use ./images//manch.png>
+Package pdftex.def Info: ./images//manch.png  used on input line 262.
+(pdftex.def)             Requested size: 245.91814pt x 165.61833pt.
+<./images//format.png, id=100, 515.9275pt x 449.68pt>
+File: ./images//format.png Graphic file (type png)
+<use ./images//format.png>
+Package pdftex.def Info: ./images//format.png  used on input line 267.
+(pdftex.def)             Requested size: 257.96312pt x 224.83945pt.
+ [14 <./images//manch.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 269--272
+
+ []
+
+<./images//bridge.png, id=105, 451.6875pt x 325.215pt>
+File: ./images//bridge.png Graphic file (type png)
+<use ./images//bridge.png>
+Package pdftex.def Info: ./images//bridge.png  used on input line 284.
+(pdftex.def)             Requested size: 225.84319pt x 162.6071pt.
+[15 <./images//format.png>]
+Overfull \hbox (21.86594pt too wide) in paragraph at lines 289--290
+[]\OT1/cmr/m/n/10.95 Bridging hub: ha una fun-zione sim-ile al re-peater, ovver
+o quello di fornire l'interconnessione
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 289--290
+
+ []
+
+<./images//flooding.png, id=110, 438.63875pt x 302.12875pt>
+File: ./images//flooding.png Graphic file (type png)
+<use ./images//flooding.png>
+Package pdftex.def Info: ./images//flooding.png  used on input line 291.
+(pdftex.def)             Requested size: 263.18527pt x 181.27864pt.
+[16 <./images//bridge.png> <./images//flooding.png>]
+<./images//switch.png, id=116, 538.01pt x 202.7575pt>
+File: ./images//switch.png Graphic file (type png)
+<use ./images//switch.png>
+Package pdftex.def Info: ./images//switch.png  used on input line 297.
+(pdftex.def)             Requested size: 269.00433pt x 101.3785pt.
+<./images//eth.png, id=117, 495.8525pt x 280.04625pt>
+File: ./images//eth.png Graphic file (type png)
+<use ./images//eth.png>
+Package pdftex.def Info: ./images//eth.png  used on input line 304.
+(pdftex.def)             Requested size: 247.92564pt x 140.02277pt.
+<./images//eth2.png, id=118, 622.325pt x 212.795pt>
+File: ./images//eth2.png Graphic file (type png)
+<use ./images//eth2.png>
+Package pdftex.def Info: ./images//eth2.png  used on input line 312.
+(pdftex.def)             Requested size: 311.16173pt x 106.39723pt.
+ [17 <./images//switch.png> <./images//eth.png>]
+<./images//llc.png, id=124, 684.5575pt x 613.29124pt>
+File: ./images//llc.png Graphic file (type png)
+<use ./images//llc.png>
+Package pdftex.def Info: ./images//llc.png  used on input line 319.
+(pdftex.def)             Requested size: 273.81815pt x 245.31215pt.
+<./images//ip.png, id=125, 657.45625pt x 305.14pt>
+File: ./images//ip.png Graphic file (type png)
+<use ./images//ip.png>
+Package pdftex.def Info: ./images//ip.png  used on input line 325.
+(pdftex.def)             Requested size: 328.72733pt x 152.56961pt.
+ [18 <./images//eth2.png> <./images//llc.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 333--337
+
+ []
+
+
+Overfull \hbox (14.20097pt too wide) in paragraph at lines 337--341
+\OT1/cmr/m/n/10.95 evito subito di in-stradare il pac-chetto (ver-i-fica in-teg
+rit^^Ra solo per la parte dell'intestazione,
+ []
+
+[19 <./images//ip.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 343--346
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 358--361
+
+ []
+
+[20]
+<./images//nat.png, id=139, 474.77374pt x 166.6225pt>
+File: ./images//nat.png Graphic file (type png)
+<use ./images//nat.png>
+Package pdftex.def Info: ./images//nat.png  used on input line 382.
+(pdftex.def)             Requested size: 237.38629pt x 83.31104pt.
+ [21] [22 <./images//nat.png>]
+<./images//dhcp.png, id=148, 662.475pt x 226.8475pt>
+File: ./images//dhcp.png Graphic file (type png)
+<use ./images//dhcp.png>
+Package pdftex.def Info: ./images//dhcp.png  used on input line 416.
+(pdftex.def)             Requested size: 215.0023pt x 73.62071pt.
+<./images//dhcp2.png, id=149, 565.11125pt x 326.21875pt>
+File: ./images//dhcp2.png Graphic file (type png)
+<use ./images//dhcp2.png>
+Package pdftex.def Info: ./images//dhcp2.png  used on input line 420.
+(pdftex.def)             Requested size: 258.00539pt x 148.93748pt.
+
+Overfull \hbox (45.4364pt too wide) in paragraph at lines 415--422
+[]$[]$  $[]$ 
+ []
+
+<./images//icmp.png, id=150, 684.5575pt x 165.61874pt>
+File: ./images//icmp.png Graphic file (type png)
+<use ./images//icmp.png>
+Package pdftex.def Info: ./images//icmp.png  used on input line 427.
+(pdftex.def)             Requested size: 342.27791pt x 82.80916pt.
+[23 <./images//dhcp.png> <./images//dhcp2.png>]
+<./images//forwarder.png, id=156, 511.9125pt x 319.1925pt>
+File: ./images//forwarder.png Graphic file (type png)
+<use ./images//forwarder.png>
+Package pdftex.def Info: ./images//forwarder.png  used on input line 437.
+(pdftex.def)             Requested size: 255.95563pt x 159.59586pt.
+ [24 <./images//icmp.png> <./images//forwarder.png>]
+<./images//dvector.png, id=162, 513.92pt x 364.36125pt>
+File: ./images//dvector.png Graphic file (type png)
+<use ./images//dvector.png>
+Package pdftex.def Info: ./images//dvector.png  used on input line 443.
+(pdftex.def)             Requested size: 256.95937pt x 182.18018pt.
+ [25 <./images//dvector.png>] [26]
+<./images//route.png, id=171, 690.58pt x 498.86375pt>
+File: ./images//route.png Graphic file (type png)
+<use ./images//route.png>
+Package pdftex.def Info: ./images//route.png  used on input line 483.
+(pdftex.def)             Requested size: 345.28915pt x 249.43126pt.
+ [27 <./images//route.png>]
+<./images//bgp.png, id=176, 411.5375pt x 276.03125pt>
+File: ./images//bgp.png Graphic file (type png)
+<use ./images//bgp.png>
+Package pdftex.def Info: ./images//bgp.png  used on input line 498.
+(pdftex.def)             Requested size: 205.76825pt x 138.01527pt.
+<./images//mpls.png, id=177, 673.51625pt x 245.91875pt>
+File: ./images//mpls.png Graphic file (type png)
+<use ./images//mpls.png>
+Package pdftex.def Info: ./images//mpls.png  used on input line 504.
+(pdftex.def)             Requested size: 336.7573pt x 122.95906pt.
+<./images//etichettatore.png, id=178, 551.05875pt x 611.28375pt>
+File: ./images//etichettatore.png Graphic file (type png)
+<use ./images//etichettatore.png>
+Package pdftex.def Info: ./images//etichettatore.png  used on input line 509.
+(pdftex.def)             Requested size: 275.52869pt x 305.64113pt.
+ [28 <./images//bgp.png> <./images//mpls.png>]
+<./images//et1.png, id=184, 539.01375pt x 358.33875pt>
+File: ./images//et1.png Graphic file (type png)
+<use ./images//et1.png>
+Package pdftex.def Info: ./images//et1.png  used on input line 517.
+(pdftex.def)             Requested size: 269.50621pt x 179.16893pt.
+ [29 <./images//etichettatore.png>]
+<./images//newlabel.png, id=193, 656.4525pt x 231.86626pt>
+File: ./images//newlabel.png Graphic file (type png)
+<use ./images//newlabel.png>
+Package pdftex.def Info: ./images//newlabel.png  used on input line 521.
+(pdftex.def)             Requested size: 328.22545pt x 115.93283pt.
+ [30 <./images//et1.png> <./images//newlabel.png>]
+(./Reti di calcolatori.aux) ) 
+Here is how much of TeX's memory you used:
+ 3928 strings out of 478994
+ 63027 string characters out of 5858184
+ 350467 words of memory out of 5000000
+ 21390 multiletter control sequences out of 15000+600000
+ 415412 words of font info for 71 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 69i,8n,77p,687b,366s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2021/texmf-dist/fonts/enc/dvip
+s/cm-super/cm-super-ts1.enc}</usr/local/texlive/2021/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi9.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr17.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9
+.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.
+pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pf
+b></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
+></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb><
+/usr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></u
+sr/local/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on "Reti di calcolatori.pdf" (30 pages, 7263701 bytes).
+PDF statistics:
+ 261 PDF objects out of 1000 (max. 8388607)
+ 126 compressed objects within 2 object streams
+ 0 named destinations out of 1000 (max. 500000)
+ 206 words of extra memory for PDF output out of 10000 (max. 10000000)
+
