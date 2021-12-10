@@ -22,20 +22,19 @@
 \begin{document}
 \maketitle
 \includegraphics[scale=0.3]{programma}
-%\subsection{}
-\\\\
-\textbf{Buffer overflow}\\
+%\
+\section{Buffer overflow}
 A buffer overflow is a bug that affects low-level code, normally a program would crash but an attacker can alter the situation \emph{to steal informations, corrupt valuable information or run an attacker's code of choice.}\\
 They are relevant because C and C++ are still popular, and buffer overflow attacks stil happen regularly.
 They have a long history and there are many approaches to defend against them.\\
-There levels in which we can act to defend against them, the compiler, the OS, or the architecture.\\\\
-\textbf{Memory Layout (32bit, Linux)}\\
+There levels in which we can act to defend against them, the compiler, the OS, or the architecture.
+\subsection*{Memory Layout (32bit, Linux)}
 In pile in a 32 bit system, Linux or Intel 32-bit the addresses range from 0x00000000 to 0xBFFFFFFF.\\
-The stack, which grows downwards, is the place in which activation records are stored, together with the heap they are created in runtime. The heap is managed with malloc, calloc, free and grows upwards, and contains variables. The text segment contains the instructions.\\
+The stack, which grows downwards, is the place in which activation records are stored, together with the heap they are created in runtime. The heap is managed with malloc, calloc, free and grows upwards, and contains variables. The text segment contains the instructions.
 \begin{center}
 \includegraphics[scale = 0.5]{heapstack}
 \end{center}
-Memory operations make the memory grow upwards, this makes overwriting the SFP possible, allowing memory errors.\\
+Memory operations make the memory grow upwards, this makes overwriting the SFP possible, allowing memory errors.
 \begin{center}
 \includegraphics[scale = 0.5]{memory5}
 \end{center}
@@ -47,7 +46,7 @@ In this example: BUF1 (which is big [24], is copied into BUF[20], since memory o
 \begin{center}
 \includegraphics[scale = 0.5]{memory2}
 \end{center}
-Now we have crashed the system, but how can we exploit this?\\ 
+\emph{We have crashed the system, but how can we exploit this?}\\
 Note that strcpy will let you write as much as you want till a terminator character, we could introduce particularly crafted code to wreak havoc.\\
 If instead of AAAA (which is: 0x65656565) we introduce code which alters the normal execution of the program, overwriting the return address.\\
 How do we build the injection vector?
@@ -59,9 +58,10 @@ We introduce arbitrary shellcode, and by hijacking the return address we can exe
 We can only load machine code into memory, which are instructions already compiled and ready to run, since we're trying to give the attacker general access to the system, the best candidate is the general-purpose shell. \\The shellcode is carefully crafted in the format \emph{[SHELLCODE][ADDRESSBUF] = Attack Vector} and it is copied with the function call "strcpy".
 It is fundamental we get to know the [ADDRESSBUF], since if we don't an unrecognized instruction is going to run and C is gonna throw an IllegaArgumentException.\\
 {\footnotesize Shellcode: machine code -that we want to execute- to run a shell}\\
-The idea: we can't insert a "jump to my code" instruction, so we hijack the saved \%eip. Since we don't know the desired \%eip address we'll have to:\\
-- Try a lot of different values, upwards of $2^{32}$ possible answers\\
-- Without address randomization, the stack always start from a fixed address, and it doesn't grow very deeply.\\
+The idea: we can't insert a "jump to my code" instruction, so we hijack the saved \%eip. Since we don't know the desired \%eip address we'll have to:\begin{itemize}
+\item Try a lot of different values, upwards of $2^{32}$ possible answers\\
+\item Without address randomization, the stack always start from a fixed address, and it doesn't grow very deeply.
+\end{itemize}
 How do we increase the chances to execute our shellcodes ?\\
 Introduce the NOPSLED: 0x90 is a NOP instruction, single byte instruction which does nothing.
 We can fill our vector buffer of NOP operations, thus increasing the chances of execution
@@ -74,10 +74,10 @@ We can fill our vector buffer of NOP operations, thus increasing the chances of 
 \includegraphics[width=\linewidth]{nopsled}
 \end{subfigure}
 \end{figure}
-Depending on the size of the buffer, we have to size our shellcode. The size depends on the allocated space by the target char array in strcpy.\\ \emph{char BUF[20]; strcpy(BUF, BUF1); size of the buffer to work with is 20}\\\\
-The computer by itself has protections, mainly towards the \textbf{returnAddress}, such as canary, nx\\\\
+Depending on the size of the buffer, we have to size our shellcode. The size depends on the allocated space by the target char array in strcpy.\\ \emph{char BUF[20]; strcpy(BUF, BUF1); size of the buffer to work with is 20}\\
+The computer by itself has protections, mainly towards the \textbf{returnAddress}, such as canary, nx
 
-\emph{Heap vs Stack}\\
+\section*{Heap vs Stack}
 Let's take an overlook over the differences between the Stack and the Heap:
 \begin{itemize}
 \item The stack:\\
@@ -118,21 +118,20 @@ AV\textunderscore TOP è il riferimento al top chunk; rappresenta lo spazio rima
 When we deallocate a chunk, we use an unlink function, this leaves an opening for us, the attacker. By hijacking the two metadata values it allows us to write an arbitrary value to an arbitrary location.
 \begin{center}
 \includegraphics[scale = 0.6]{atk1}
-\emph{the intended process}
-\end{center}
-\includegraphics[scale = 0.6]{atk2}
-\begin{center}
+\emph{the intended process}\\
+\includegraphics[scale = 0.6]{atk2}\\
 \emph{malicious code which allows us to manipulate the BK}
 \end{center}
 Unfortunately this technique no longer works, the current unlink function verifies beforehand the values
-We can however look for other flaws:\\
-\emph{House of Force vulnerabity}
+We can however look for other flaws:
+
+\subsection*{House of Force vulnerabity}
 Conditions:
 \begin{itemize}
 \item It requires 3 malloc, more precisely a malloc that allows us to overwrite the top chunk, one malloc with a user controllable size and another call to malloc.
 \item 1 (or 2) strcpy
 \end{itemize}
-\emph{Use after free vulnerability}
+\subsection*{Use after free vulnerability}
 Use after free vulnerability are vulnerabilities that happen when a  pointer to an object that hash been freed is deferenced. This can lead to information leakage, and furthermore the attacker could also modify unintended memory locations that can potentially lead to code execution.\\
 A prime candidate for an attack is a dangling pointer. Dangling pointer happen when a pointer, which was previously the target of another pointer is deleted, leaving the other pointer dangling.\\
 \begin{center}
@@ -149,12 +148,12 @@ b, after using \emph{b[2] = 'c'} is able to modify a memory portion of a after i
 \includegraphics[scale = 0.6]{usafter2}
 \end{center}
 b punta a una porzione dello stack che è stata deallocata. chiamando *b = 'c' modifichiamo una porzione dello stack che è stata deallocata precedentemente (nello stack p diventa c).
-\\\\\\
 
-\emph{Defence and mitigation mechanisms}\\
-All these attacks have in common a couple of characteristics:\\
-- The attacker is able to control some data that is used by the program\\
-- The use of data permits unintentional access to some memory area in the program past a buffer, or to an arbitrary position on the stack.\\
+\section*{Defence and mitigation mechanisms}
+All these attacks have in common a couple of characteristics:\begin{itemize}
+\item The attacker is able to control some data that is used by the program
+\item The use of data permits unintentional access to some memory area in the program past a buffer, or to an arbitrary position on the stack.
+\end{itemize}
 So what can we do to \emph{mitigate} these vulnerabilities?\\
 First of all it's important we mention that we are not going to implement solutions which are going to leave us with a type safety and memory safety language. We are only going to implement mechanisms which are going to make the exploitation of these vulnerabilities too costly/time consuming.\\\\
 Type safety and memory safety are two fundamental mechanisms which can help us mitigate these vulnerabilities, these properties, if met, ensure an application is immune to memory attacks. Languages such as C and C++ don't implement memory and type safety due to its efficiency load, other languages that do are JAVA or Python.\\\\
@@ -175,49 +174,47 @@ Control Flow Integrity \textbf{(CFI)} are mechanisms implemented to prevent a va
 \item Secure coding are a set of practises that applies to security considerations that help defend against vulnerabilities, bugs and exploits. Secure coding introduces safeguards which reduce or eliminate the risk of leaving security vulnerabilities in the code, most important of which are \textbf{memory safety and type safety}
 \end{itemize}
 
-\emph{Memory Safety}
-Memory safety is a fundamental principle which helps mitigate 
-To guarantee a degree of memory safety in C we can:
+\section*{Memory Safety}
+Memory safety is a fundamental principle which helps mitigate C's vulnerabilities, in particular to guarantee a degree of memory safety in C we can impose to:
 \begin{itemize}
 \item only create pointer through standard means
 \begin{center}
 p  = malloc(...), or p = \&x, or p = \&buf[5] etc.
 \end{center}
-item only use pointers to access memory that "belong" (that is withint the bound) of that pointer and of the type that corresponds. (int* to integers, char* to characters).
+item only use pointers to access memory that "belong", that is within the bound of that pointer and of the type that corresponds. (int* to integers, char* to characters).
 \end{itemize}
 This essentially combines two principles: \emph{temporal safety and spatial safety}.
 
 
-\textbf{Spatial Safety} (in the heap)\\
-Let us 
+\subsection*{Spatial Safety (in the heap)}
 Pointers are viewed as triples $(p, b, e)$ where:
 \begin{itemize}
 \item $p$ is the actual pointer
 \item $b$ is the base of the memory region it may access
 \item $e$is the extend (or the bounds) of the region
 \end{itemize}
-The deferenced access shall be allowed iff $ b \leq p \leq e - sizeof(typeof(p))$. 
-
-An implementation of a spatial safety compliant memcpy
+The deferenced access shall be allowed iff $ b \leq p \leq e - sizeof(typeof(p))$. \\ An implementation of a spatial safety compliant memcpy:
 \begin{center}
 \includegraphics[scale = 0.6]{memsef}
 \end{center}
 
 
-\textbf{Temporal safety}\\
-Memory regions can either be defined or undefined:\\
-- defined means allocated (and active)\\
-- undefined means allocated, uninitialised, or deallocated\\
-A temporal safety violation occurs when an attacker tries to access undefined memory space\\ 
-- spatial safety assures that an accessed region is legal\\
-- temporal safety assures that region is still in play\\\\
-When a free function is called, the pointer towards that region is freed up, but the data remains in the stack, just unreferenced. The garbage collection's job is the memory management, its main function si to reclaim memory which was allocated by the program, but is no longer referenced.\\
+\subsection*{Temporal safety}
+Memory regions can either be defined or undefined:\begin{itemize}
+\item defined means allocated (and active)
+\item undefined means allocated, uninitialised, or deallocated\\
+A temporal safety violation occurs when an attacker tries to access undefined memory space
+\item spatial safety assures that an accessed region is legal
+\item temporal safety assures that region is still in play
+\end{itemize}
+When a free function is called, the pointer towards that region is freed up, but the data remains in the stack, just unreferenced. The garbage collection's job is the memory management, its main function is to reclaim memory which was allocated by the program, but is no longer referenced.\\
 The aim is to implement mechanisms similar to the garbage collector, but not quite; we want to protect vulnerable portions of the memory. The garbage collectors are demanding in terms of resources.\\\\
 But why would we want to use a language that is \textbf{not memory safe and type safe}?\\
 The easiest way to avoid all these vulnerabilities would be to use a \textbf{memory safe language}, languages that are \textbf{type safe are even better.} 
 \begin{center}
 \textbf{Type safety  $>$ Memory Safety}
 \end{center}
+\subsection*{Type safety in C}
 The main reason is that C and C++ are \textbf{here to stay}, while not memory safe, writing memory safe programs is possible.\\The problem of type safety and memory safety has been known for more than 20 years, the limiting factor has always been \textbf{performance}  (around 12x and 17x overhead). Furthermore adding type safety would also make C and C++ much slower. \\
 Type safety enforcement is expensive, the most important mechanisms are 
 \begin{itemize}
@@ -226,7 +223,7 @@ Type safety enforcement is expensive, the most important mechanisms are
 \item \textbf{Hiding representation} may \textbf{inhibit optimisation}\\
 technique such as C-style casts, pointer arithmetic, \& operators would not be allowed
 \end{itemize}
-\emph{So what can we do in C?}
+\subsection*{So what can we do in C?}
 \begin{itemize}
 \item Compiler could add code to \textbf{check for violations}\\
 An out-of-bounds access would result in immediate failure just like an \emph{ArrayBoundsException} in Java.
@@ -246,7 +243,9 @@ Operations on he objects shall be always compatible with the object's type. Type
 \begin{center}
 \includegraphics[scale = 0.6]{tsef}
 \end{center}
-So how can we guarantee a degree of type safety in C?
+\end{itemize}
+
+\subsection*{So how can we guarantee a degree of type safety in C?}
 Using \textbf{enforce invariants}, are properties which cannot be violated by type, by enforcing invariants in the program. Most notably is the enforcement of \textbf{abstract types}, which characterised modules. It keep the \textbf{representation of the modules hidden from others}. This guarantee a \textbf{degree of isolation} from the rest of the system.\\\\
 Type-enforced invariants can relate to security properties, by expressing stronger invariants about data's privacy and integrity we can mitigate type mismatch exploits, such as the following in Java.
 \begin{center}
@@ -254,8 +253,8 @@ Type-enforced invariants can relate to security properties, by expressing strong
 \end{center}
 All of these mechanisms concurrently compose the security by design principle, which means that the language and its capabilities are foundationally secure. In this approach security is built into the system, not mitigating since the design stage notable vulnerabilities.\\
 There are already languages which provide similar features to C, while remaining type safe, notable examples are Google's Go, Mozilla's Rust, Apple's Swift.
-\end{itemize}
-\textbf{Other defensive strategies:}\\
+
+\subsection*{Other defensive strategies:}
 These are complementary, they mitigate bugs but can't shut them out entirely
 \begin{itemize}
 \item Make the bug harder to exploit: introduce more steps, to make them difficult or impossible
@@ -268,7 +267,9 @@ To implement these, let's recall the steps of a stack smashing attack:
 \item Finding the return address (by guessing the raw address)
 \end{itemize}
 To make these attacks steps more difficult we can use libraries, compiler mechanisms and the operating system. We are trying to fix the architectural design, and not the code.
-\section*{Overflows detection using canaries:}
+
+\section*{Overflows detection}
+\subsection*{Stack canaries}
 Managed by the compiler, canaries work by protecting the return address by detecting any change that could have harmed the stack's integrity. The canaries are placed inside the stack in a protected memory section between user and system variables. \\The canary's value has to be random, and unaccessible by the attacker otherwise it could be overwritten with the same value.
 The canary is introduced when the function is called, using a machine code function called \emph{push canary}
 \begin{center}
@@ -285,7 +286,8 @@ The values the canary can assume are these:
 \item $[ret$ $XOR$ $canaryValue]$ the verify the canary value
 \end{enumerate}
 This works due to the nature of XOR, calling it two times gives us the initial value
-\section*{DEP: Data Execution Prevention:}
+
+\subsection*{DEP | Data Execution Prevention}
 This defence works by making the stack and heap memory space non-executable. Attackers bypassed this defence by having the shellcode point to system libraries in an attack called \emph{return-to-libc}.\\ lib-c libraries are used by the gcc compiler, meaning they are always available.\\\\
 To use this attack, system is called. System is a function that has argument a terminal command. In order to work with this vulnerability, we need to first: call the system function, and two: have it run a meaningful command. This is done by placing the command next to the system call. The injection vector is modified in the following way.
 \begin{center}
@@ -302,18 +304,20 @@ When we talk about \emph{cat and mouse} we mean the game of cat and mouse being 
 \begin{center}
 \includegraphics[scale = 0.5]{catmouse}
 \end{center}
+
 \section*{Return oriented Programming}
-First introduced by Hovav Shacham in 2007, the idea is: rather than use a single libc function to run the shellcode, we string together pieces of existing code called gadgets to do it. Intuitively, we need to find the gadgets we need, and we need a mechanism to string them together\\\\
-\textbf{gadgets}\\
-Gadgets are instruction groups that end with \emph{ret}
+First introduced by Hovav Shacham in 2007, the idea is: rather than use a single libc function to run the shellcode, we string together pieces of existing code called gadgets to do it. Intuitively, we need to find the gadgets we need, and we need a mechanism to string them together
+\subsection*{Gadgets}
+Gadgets are instruction groups that end with \emph{ret}:
 \begin{figure}[H]
+\begin{center}
 \begin{subfigure}[H]{0.2\linewidth}
 \includegraphics[width=\linewidth]{gadget}
 \end{subfigure}
-\hfill
 \begin{subfigure}[H]{0.5\linewidth}
 \includegraphics[width=\linewidth]{gadex}
 \end{subfigure}%
+\end{center}
 \end{figure}
 The memory structure that we're using is still the stack, which is also where we're loading our code.\begin{itemize}
 \item \%esp serves as program counter
@@ -321,46 +325,48 @@ The memory structure that we're using is still the stack, which is also where we
 \item \emph{multiple gadgets} are linked with each others using \emph{ret} instructions
 \item \emph{gadgets} get their arguments via \emph{pop, peek etc.}
 \end{itemize}
-In this example we're trying to find an applicable instruction equivalent to \emph{mov \%edx, 5}, being: \emph{pop \%edx ret}.\\
+In this example we're trying to find an applicable instruction equivalent to \emph{mov \%edx, 5}, being: \emph{pop \%edx ret}.
 
-\emph{So how do I actually find gadgets?}\\
-One approach would be an automated search of the target binary for gadgets. This technique work by looking for \emph{ret} instructions, by working backwards.
-\emph{Are these gadgets actually enough to do anything interesting?}\\
+\subsection*{So how do I actually find gadgets?}
+One approach would be an automated search of the target binary for gadgets. This technique works by looking for \emph{ret} instructions, by working backwards.
+\subsection*{Are these gadgets actually enough to do anything interesting?}
 Yes, Shacham found that with significant codebases (such as libc) gadgets are \emph{Turing complete} meaning they're theoretically capable of solving any computational problem. Scwartz, in 2011, automated the gadget shellcode creation process (ROP compiler), without needing Turing completeness.\\\\
 In CISC there is a degree of variability in the length of instruction (which is not present in ARM for example since it's a RISC)(RISC instruction lengths are fixed) which provides an extensive degree of freedom to exploits gadgets. This particular aspect is called dense Instruction Set.
 \begin{figure}[H]
 \begin{subfigure}[H]{0.4\linewidth}
 \includegraphics[width=\linewidth]{b1}
 \end{subfigure}
-\begin{subfigure}[H]{0.8\linewidth}
+\begin{subfigure}[H]{0.7\linewidth}
 \includegraphics[width=\linewidth]{b2}
 \end{subfigure}%
 \end{figure}
 With a simple program like this, we can extract a gigantic amount of instruction.
 \section*{Hacking Blind}
-Berkley students attack a victim server via a socket, which has all the defence mechanisms we have previously seen enabled, namely ASLR, canary and DEP. The attack happens based on a socket and a linux 64 bit server, via buffer overflow. The exploitation is based on the \emph{write} function:\begin{center}
-\emph{write(SD, [buffer], length}\\
-SD is soket descriptor
+Berkley students managed to attack victim server via a socket, which has all the defence mechanisms we have previously seen enabled, namely ASLR, canary and DEP. The attack happens based on a socket and a linux 64 bit server, via buffer overflow. The exploitation is based on the \emph{write} function:\begin{center}
+\emph{write(SD, [buffer], length)}\\
+SD is socket descriptor
 \end{center}
 Utilising a flaw in the \emph{write} function the attacker is able to copy the buffer portion of memory
 \begin{center}
 \includegraphics[scale = 0.5]{socket}
 \end{center}
-A fully automated attack based on this exploit yields a shell in under 4000 requests (20 minutes) against a modern system. \textbf{Techniques needed}:
+A fully automated attack based on this exploit yields a shell in under 4000 requests (20 minutes) against a modern system. 
+\subsection*{Techniques needed}
 \begin{enumerate}
-\item Generalised stack reading: the possibility to read the stack in its entirety, used to leak the canaries (replace them with he correct values), and to defeat the ASLR (if I am able to read the stack, I am also able to read the location of the program).\\
-Attacking canaries is based on the fact that when a thread crashes on a server, only the thread is reset, not the entire system, and therefore the canary stays the same. The attacker can progressively guess byte per byte the value of the canary. In this example the canary is of size 4 bytes, but on 64 bits system the canary is of size 8 bytes.
+\item Generalised stack reading: \\
+the possibility to read the stack in its entirety, used to leak the canaries (replace them with the correct values), and to defeat the ASLR (if I am able to read the stack, I am also able to read the location of the program).\\
+The canary attack these students did is based on the fact that when a thread crashes on a server, only the thread is reset and not the entire system, and therefore the canary value remains the same. The attacker can progressively guess byte per byte the value of the canary. In this example the canary is of size 4 bytes, but on 64 bits system the canary is of size 8 bytes.
 \begin{center}
 \includegraphics[scale = 0.5]{cattack}
 \end{center}
 To guess the canary we try every value from \emph{0 to 256} every byte, when the thread crashes we proceed with the next value, if the custom value doesn't invoke a crash, we found our value. Using this technique we can also guess the value of the return address.
 
-\item Blind ROP: this technique remotely locates ROP gadgets (write functions)
-The goal is to find enough gadgets to invoke \emph{write}. If we manage this, the binary can be dumped from memory to the network to find more gadgets. As previously mentioned, the \emph{write} system call takes 3 arguments: a socket, a buffer and a length. These are passed in \emph{rdi, rsi, rdx} registers, and the system call is stored in the \emph{rax} register. The following gadgets are therefore needed:
+\item Blind ROP: this technique remotely locates ROP gadgets (write functions)\\
+The goal is to find enough gadgets to invoke \emph{write}. If we manage to do this, the binary can be dumped from memory to network finding even more gadgets in the process. As previously mentioned, the \emph{write} system call takes 3 arguments: a socket, a buffer and a length. These are passed in \emph{rdi, rsi, rdx} registers, and the system call is stored in the \emph{rax} register. The following gadgets are therefore needed:
 \begin{center}
 \includegraphics[scale = 0.5]{gadg}
 \end{center}
-\emph{but how do we find these gadgets?}\\
+\subsection*{But how do we find these gadgets?}
 \emph{pop rdi, rsi, rdx} are manageable, \emph{pop rax and syscall} are the problematic functions, syscall is almost never called since this is usually done through libraries.\\
 To effectively find gadgets, we modify progressively the return address, sorting them into crash gadgets, which cause the socket to crash, non-crash gadgets, which produce an arbitrary effect. 
 \begin{center}
@@ -375,10 +381,22 @@ To call functions the PLT (static loader table) and GOT (populated by the dynami
 \begin{center}
 \includegraphics[scale = 0.4]{plt}
 \end{center}
-We have seen that memory safety and type safety solve most of the memory errors, \emph{control flow integrity} is the last passive defence mechanism we see.\\
+We have seen that memory safety and type safety solve most of the memory errors, \emph{control flow integrity} is the last passive defence mechanism we see.
+
+
 
 \section*{Control flow integrity}
 CFI aims to defend a program by observing the program's behaviour, if the program is not doing what we expect it to do, it might be compromised. To do this we need to define an \textbf{expected behaviour}, create mechanisms which let us \textbf{detect deviations from expectations effectively}, implement policies which \textbf{prevent compromise of the detector}
+\subsection*{How efficient is CFI ?}
+Classic CFI imposes a 16\% overhead on average, 45\% in the worst cases, it works on arbitrary executables, and is not modular.\\
+Modular CFI imposes a 5\% overhead on average, and 12\%in the worst cases, it works only in C (part of the LLVM, source code), and is modular, with separate compilation routines
+\subsection*{How secure is CFI actually?}
+MFI can eliminate 95\% of ROP gadgets on x86-64 versions of SPEC2006 benchmark suites. Average indirect-target reduction is of $>99\%$, meaning that the percentage of possible targets of indirect jumps is almost completely ruled out.
+
+\subsection*{Randomness and immutability of the detector} 
+A degree of randomness and immutability is added to the detector to avoid compromise
+
+
 \subsection*{Control flow graph | CFG} to define expected behaviour.
 One way we can do this is by utilising \textbf{call graphs}. The aim is to represent all the possible combinations of function calls to other functions
 \begin{center}
@@ -386,14 +404,255 @@ One way we can do this is by utilising \textbf{call graphs}. The aim is to repre
 \emph{example of a function which sorts by calling 2 distinct functions}
 \end{center}
 The code is broken up into \textbf{basic blocks}, \textbf{calls} are distinguished from \textbf{returns.}
+We compute call/returns CFG in advance, during the compilation or from the binary. We monitor the control flow of the program and ensure that it only follows paths allowed by the CFG.\\\\
+Note that calls can be divided into direct calls and indirect calls: \emph{direct calls jump to fixed addresses}, the target address cannot be changed; \emph{indirect calls are calculated at run-time}, the value of the target address cannot be calculated beforehand, these are \emph{jmp, call, ret}.\\
+We only need to monitor \textbf{indirect calls}, direct calls need not be monitored since an attacker cannot change a fixed address.
+\begin{figure}[H]
+\begin{subfigure}[H]{0.5\linewidth}
+\includegraphics[width=\linewidth]{cfi2}
+\emph{direct calls always have the same target}
+\end{subfigure}
+\begin{subfigure}[H]{0.5\linewidth}
+\includegraphics[width=\linewidth]{cfi3}
+\emph{indirect transfers do not}
+\end{subfigure}%
+\end{figure}
+
+\subsection*{In-line reference monitor | IRM} 
+IRM is used to detect deviations from expectations, it works by introducing control methods inside the program (in binary or inside the program) (program transformation). More particularly we utilise labels, determined by the CFG:\begin{itemize}
+\item insert a label just before the target address of an indirect transfer
+\item insert code to check the label of the target at each indirect transfer\\
+If the label does not match, we abort the execution
+\end{itemize}
+\begin{center}
+\includegraphics[scale = 0.4]{labels}
+\end{center}
+If for example an attacker manages to hijack the control flow of the program, when he tries to access a system call the jump is denied, since it's not validated by the CFG.
+\begin{center}
+\includegraphics[scale = 0.4]{labels2}
+\end{center}
+We can further improve simple labelling by introducing \textbf{detailed labelling}
+\begin{center}
+\includegraphics[scale = 0.4]{labels3}
+\end{center}
+\begin{itemize}
+\item return sites from calls to \emph{sort} must share a label $L$
+\item call targets $gt$ and $lt$ must share a label $M$
+\item remaining labels are unconstrained $N$
+\end{itemize} 
+So how can we defeat CFI?
+\begin{itemize}
+\item inject code that has a \emph{legal label}\\
+- won't work since we assume non-executable data
+\item modify code labels to allow a desired control flow\\
+- won't work since the code is immutable
+\item modify the stack during a check\\
+- won't work since the attacker cannot change register 
+\end{itemize}
+\subsection*{CFI assurances}
+CFI defeats control flow-modifying attack such as remote code injections, ROP/return to libc, etc.
+\begin{itemize}
+\item It cannot defeat attacks based on manipulation of control flow that is allowed by the labels/graph, these are called \textbf{mimicry attack}. These attack mimic a valid control flow, bypassing detection.\item It cannot defeat data leaks or corruptions, heartbleed cannot be prevented, nor the \emph{authenticated} overflow. In simpler terms, attacks based on the modification of attributes and variables are not preventable using CFI, such as:
+\begin{center}
+\includegraphics[scale = 0.6]{cfia}
+\end{center}
+\end{itemize}
+
+\section*{Static Analysis and Dynamic Analysis | persa prima parte}
+Analysis can range from static to dynamic, and from automatic to manual. The main advantage of static analysis is that when designed, it's fast to execute; the downside is that the precision is not that great, potentially leading to false positives.  Dynamic analysis is more precise than static analysis, and is done by actually executing the program and closely monitoring the execution. The downside of dynamic analysis is that only a single input can be verified at a time, making it slow (as compared to static)
+\begin{center}
+\includegraphics[scale = 0.6]{dov}\\
+\emph{main vulnerability detection techniques}
+\end{center}
+The most common technique is debugging, monitoring the system execution looking for bugs and flaws. Symbolic execution is an example of testing that can be done both statically, and dynamically. Crash analysis aims to crash the program intentionally, and analyse the system's dump (root cause analysis).
+\subsection*{Detection of the vulnerability}
+The aim of this process is to detect the presence of vulnerabilities in the code during the stages of development, testing, and maintenance.
+\subsection*{Soundness and completess}
+While considering the tools available to us we need to consider the trade-off between \emph{soundness} and \emph{completeness}.\\
+
+A detection technique is considered \textbf{sound} if for a given category, it can correctly conclude that a given program or system has or hasn't vulnerabilities (per una data categoria è in grado di dirmi se il programma è sicuro | eg. niente bof).\\
+An unsound detection technique, on the other hand, may have \textbf{false negatives}, meaning that actual vulnerabilities may slip through the tool's detection techniques.\\
+Achieving soundness requires a consideration based on all execution of a program. This can be done by static checking of the program code, and building up an abstraction of the program execution. Using this abstraction we aim to execute the program in all its possible permutations.\\
 
 
-\subsection*{In-line reference monitor | IRM} to detect deviations from expectations, it works by introducing control methods inside the program (in binary or inside the program)
-\subsection*{Sufficient randomness and immutability} to avoid compromise of the detector\\\\
-\emph{So how efficient is CFI actually?}\\
-Classic CFI imposes a 16\% overhead on average, 45\% in the worst cases, it works on arbitrary executables, and is not modular.\\
-Modular CFI imposes a 5\% overhead on average, and 12\%in the worst cases, it works only in C (part of the LLVM, source code), and is modular, with separate compilation routines\\\\
-\emph{And how secure is CFI actually?}\\
-MFI can eliminate 95\% of ROP gadgets on x86-64 versions of SPEC2006 benchmark suites. Average indirect-target reduction is of $>99\%$, meaning that the percentage of possible targets of indirect jumps is almost completely ruled out.
+A detection technique is \textbf{complete} for a given category if any vulnerability if finds is an actual vulnerability. By contrast and incomplete detection may have \textbf{false positives}, it may therefore detect issues which aren't actually vulnerabilities.\\
+Achieving completeness can be done by executing the program that show the vulnerability, this analysis technique should provide concrete inputs that triggers a vulnerability. Software testing is a way a developer can achieve completeness, by writing test cases with concrete inputs, and specific checks for the outputs\\\\
+In the real world techniques are mixed and used concurrently to analyse the program, employing both static and dynamic analysis to achieve a good trade-off between soundness and completeness. An hypothetical tool may be able to achieve both soundness and completeness, unfortunately such a tool doesn't exist, so we try to balance in the best way we can.
+
+\subsection*{Static analysis and Symbolic execution}
+Static analysis is any offline computation that inspects the code and produces results based on the quality of the code. This can be applied both for source code and binary code. 
+Techniques include regular expressions, classic compiler flow analyses or some combination of these. It is important to note that static analysis does not have to use symbolic execution (input non concreti, ma associati a simboli). \\
+
+Symbolic execution is a specific kind of off-line computation that computes some approximation of what the program actually does by constructing formulas representing the program state at various points. It is called symbolic because the approximation is usually based on some formula involving program variables and constraints on their values.\\
+\subsection*{Symbolic execution}
+Testing is a technique widely used in software engineering and works by utilising assertions such as \begin{center}
+$assert(f(3) == 5)$\end{center}
+This technique is \emph{complete}, meaning that a bug found is a real bug, but \emph{not sound} since each test can only explore one possibility.\\
+Symbolic execution generalises testing, the aim is to make employ a "more sound" technique that testing. Symbolic execution allows the implementation of unknown symbolic variables $\alpha$ in an evaluation such as\begin{center}
+$y = a; assert(f(y) == 2* y-1)$\\
+\noindent\rule{8cm}{0.4pt}
+\includegraphics[scale = 0.4]{dov2}
+\end{center}
+The path condition represents the input condition needed to reach a specific outcome. Each path condition can be used to create an actual input (usually done by the constraint solver). Soundness is partially achieved since we're able to verify for a number permutations of inputs. Each symbolic execution path stands for many actual program runs, as many concrete run under symbolic execution paths. We cover a lot more of the program's execution space than testing. \\
+Static execution can therefore be viewed as static analysis which is complete, but not sounds; it is path, flow and context sensitive.
+\subsubsection*{A bit of history}
+First implemented in the 70s, it didn't take off right away since symbolic execution can be quite computer intensive due to the high number of possible program paths, need to query solve a lot to decide which paths are feasible and which assertions could be false. Computer were slower and smaller, not equipped with a lot of processing power. Nowadays, however, computer are faster and bigger, and symbolic execution is making a comeback also due to better algorithms and SMT/SAT (satisfiability modulo theories) solver, which can solve large instances very quickly
+\subsection*{Symbolic variables}
+Symbolic variables are an extensions of the language to support expressions $e$ to include symbolic variables, representing unknowns (but supported by the program itself)
+\begin{center}
+\includegraphics[scale = 0.4]{dov3}
+\end{center}
+Symbolic variables are introduced when reading inputs, particularly when using \emph{nmap, read, write, fgets etc.} If a bug is found, we can safely extract the input that produces the error.
+Furthermore we need to make or modify a language interpreter to be able to compute symbolically. normally a program's variables contain values, we modify them by also making sure they support \emph{symbolic expressions}.
+\begin{center}
+$5, "hello" \rightarrow \alpha + 5, hello + \alpha etc.$
+\end{center}
+Consideriamo il seguente programma:
+\begin{center}
+\includegraphics[scale = 0.4]{dov4}\\
+\emph{the overrun comes from the fact that z has a value which exceed the array bounds of a}
+\end{center}
+But in symbolic memory the value of $\alpha$ \emph{can} exceed the bounds, but not necessarily
+
+\subsection*{Path conditions}
+As previously said, path conditions are necessary conditions on inputs for reaching the target location is disjunction of all abstract path conditions. More specifically in programming a path condition diverges from another when an $if$ is encountered, for example:
+\begin{center}
+\includegraphics[scale = 0.4]{dov5}
+\end{center}
+We represent the influence of symbolic values on the current path using a path condition $\pi$, particularly:\begin{itemize}
+\item line 3 reached when $\alpha > 5$
+\item line 5 reached when $\alpha > 5$ and $\alpha < 10$
+\item line 6 reached when $\alpha \geq 5$
+\end{itemize}
+Not all path are reachable, particularly we talk about \emph{path feasibility} when we talk about whether a path is feasible 
+\begin{itemize}
+\item line 3 reached when $\pi = \alpha > 5$, solution to which can be $\alpha = 6$
+\item line 5 reached when $\pi = \alpha > 5$ and $\alpha < 10$, but this is not satisfiable, the value of $\alpha$ cannot be both bigger than 5 and smaller than 3
+\item line 6 reached when $\pi = \alpha \geq 5$, solution to which can be $\alpha = 2$
+\end{itemize}
+\subsection*{Paths and assertions}
+\begin{center}
+\includegraphics[scale = 0.4]{dov6}
+\end{center}
+Assertions like array bounds checks are conditionals, can therefore verifiable. A security analyst can for example check the value of the index of an array during testing. If there is a feasible path leading to the aborts, we can deduce that the program has a security flaw/bug, if there are no feasible aborts, the program is safe.\begin{itemize}
+\item to reach the line 5: \begin{center}
+$\pi = 7+5+\alpha= 12+\alpha \rightarrow \pi = 12+ \alpha < 0$
+\end{center}
+\item to reach the line 7 abort: \begin{center}
+negate the line 4 condition, add the line 6 condiiton:\\
+$\pi = \lnot(12+\alpha < 0) \land(12+\alpha \geq 4)$
+\end{center}
+\end{itemize}
+We look for path infeasibility to guarantee that there are no buffer overflow.
+\subsection*{Forking execution}
+Symbolic executors can fork at branching points, which happen when there are solutions to both the path conditions and its negation. How can we systematically explore both directions?
+\begin{itemize}
+\item check feasability during execution and queue feasible path for later consideration
+\item concolic execution: run the program to completion, then generate new inputs by changing the path condition (esecuzione concreta del programma su dati input, con l'aggiunta dell'esecuzione simbolica)
+\end{itemize}
+To explore all possible paths we follow the execution algorithm:
+\begin{center}
+\includegraphics[scale = 0.4]{dov7}
+\end{center}
+this algorithm is based on a basic depth-search of a graph
+\subsection*{Libraries and native code}
+At some point symbolic execution will reach the edges of a program such as libraries, systems or assembly code calls. An example can be the libc, which is insanely complicated, way too complicated for symbolic execution which can easily get stuck in it. We can introduce a simpler version of libc, for example newlib.
+
+\subsection*{Concolic execution | Dynamic symbolic execution}
+Instead of running the symblic execution in a static way, we instrument the program to do symbolic execution as the program runs, initially the program considers concrete states (which could be randomly generated) to determine initial paths. \\
+Each time a branch path is encountered, the expression is saved inside a \emph{shadow path memory}, which are then explored one path at a time, from start to finish. The next path can be determined by negating some element of the last path conditions.\\
+Concolic execution makes it really easy to concretise inputs, by replacing symbolic variables with concrete values that satisfy the path condition.
+
+\section*{Search and SMT}
+Symbolic execution is appealingly simple and useful, but it's computationally expensive. Let's see how the effective use of symbolic execution boils down to a kind of search, and take a moment to see how its feasibility at all has been aided by the rise of SMT solvers. Basically the practical use of symbolic executiong boils down to \begin{itemize}
+\item searching for the paths
+\item solving the symbolic execution for these paths using SMT solvers while accounting for feasibility
+\end{itemize}
+One of the first thing to note is that we cannot run symbolic execution to exhausting, since this would quickly generate a exponential number of branches
+\begin{center}
+\includegraphics[scale = 0.4]{pc1}\\
+\emph{3 variables, 8 program paths}\\
+\end{center}
+And loops are even worse
+\begin{center}
+\includegraphics[scale = 0.4]{pc2}\\
+\emph{potentially $2^{31}$ paths}
+\end{center}
+Concolic executiong, as opposed to static analysis, doesn't terminate before considering all possible program runs. Static execution approximates multiple loop executions, assuming all branches or a number of loop iterations are feasible; this however can lead to false alarms. Concolic execution of the other hand aims to be more precise, granting more completeness.
+\subsection*{Basic symbolic execution}
+\emph{So how do we actually look for the possible paths?}\\
+Simply, using seach algorithms, in particular
+\begin{itemize}
+\item Depth-first search (DFS) using a stack as worklist
+\item Breadth-first seach (BFS) using a queue as worklist
+\end{itemize}
+Potential drawbacks to this approach are that searches cannot be guided by any higher level knowledge (getting stucks in loops, path explosion etc.), moreover \emph{DFS} can easily get stuck in parts of programs, making \emph{BFS} the better choice between the two.
+
+\subsection*{Advanced symbolic execution}
+As we have seen DFS and BFS are not optimal solutions, let's focus on prioritising searches, trying to steer searching towards paths more likely to contain assertions failures, and imposing a time limit on execution.\\
+To this end, let's think of a program execution as a DAG in which
+
+\begin{center}
+$Nodes = program states$\\
+$Edges(n_1, n_2) =$ transition from state $n_1$ to $n_2$
+\end{center}
+Intuitively we need a new graph exploration algorithm.
+
+\subsection*{Randomness}
+Since we don't know a priori which path to take, we add a degree of randomness,  we start by taking a concrete path, then executing a symbolic execution, randomly generating an expression $n$ times, if no effects are detected we move on.
+\begin{enumerate}
+\item pick next path to explore uniformly at random
+\item randomly restart search if we haven't hit anything interesting in a while
+\item choose among equal priority paths at random
+\end{enumerate}
+The problem with randomness is its non-reproducibility, we cannot reproduce specific execution unless we save the seeds.
+
+\subsection*{Coverage guided heuristics}
+Coverage guided heuristics tries to keep a tab on previously visited paths using a score system. We visit statements we haven't seen before (or lowest score)
+\begin{itemize}
+\item we give a score to each statement based on the number of times it has been seen
+\item we pick the next statement to explore based on the lowest score
+\end{itemize}
+This technique tries to reach everywhere, even in hard to reach parts of the programs. The problem with this approach is that it may never be able to get to a statement if proper precondition not set up.
+
+\subsection*{Generational search}
+Generational search is a hybrid of BFS and coverage-guided, this technique aims to increase the level of coverage
+\begin{itemize}
+\item Generation 0: pick one program at random, run to completion
+\item Generation 1: take paths from $gen_0$, negate one branch condition to yield a new prefix, find a solution for this prefix and take the resulting path
+\item Generation $n$: branch off again from $gen_{n-1}$
+\end{itemize}
+Generational search also uses coverage heuristic to pick priority
+
+\subsection*{Combined search}
+Combined search aims to run multiple searches with different techniques at the same time alternating between them, it aims to increase parallelisation. The logic is since no-one-size-fits-alll solution, we switch between search techniques based on the occasion, selecting occasionally the algorithm.
+
+\section*{SMT solvers}
+SMT solvers are the tools we use to solve SATs.\\
+SAT problems is translate in propositional formula that is composed by boolean variables connected by boolean operators ($\not, \lor, \rightarrow)$. \begin{itemize}
+\item if the formula is satisfiable, there is an assignment that makes the results true, otherwise the formula is \emph{unsat}
+\item the solution to the formula are based on the truth table, the solution to which is exponential
+\item SAT is an NP-Complete problem
+\end{itemize}
+\subsection*{Z3 SAT/SMT Solver}
+Z3 SAT/SMT is a SAT solver developed by Microsoft
+\begin{itemize}
+\item an instance is passed to the quantifier-free SMT solver
+\item theory reasoner creates a boolean model, which is then tested by the SAT solver
+\item if there are conflict clauses, the model is rejected and the theory reasoner tries again
+\end{itemize}
+The SMT solver then outputs a model which can be further developed, or the expression is deemed UNSAT
+\begin{center}
+\includegraphics[scale = 0.4]{theory}
+\end{center}
+Other SMT solvers are Yices by SRI, STP by Vijay Ganesh, CVC3 by NYU
+\subsubsection*{A bit of history}
+\begin{itemize}
+\item SAGE is a concolic executor developed at Microsoft Research which primarly targets bugs in file parsers (JPEG, DOCX, PPT etc.), uses generational search. SAGE is used on production software at MS (500 machines years, 3.4+ billion constrains, 100s of apps, 100s of bugs)
+\item KLEE is a symbolic executor for LLVM bitcode, uses $fork()$ to manage multiple states, uses a variety of search strategies, mainly random path + coverage guided
+\item Mayhem runs on binaries, uses BFS search and native execution, combines best of symbolic and concolic strategies, and automatically generates exploits when bugs are found
+\item Mergepoint extends Mayhen with a technique called veritesting, combining symbolic execution with static analysis. It provides a better balance of time between olver and executor, finding more bugs, and covers more of the program
+\end{itemize}
 
 \end{document}  
+

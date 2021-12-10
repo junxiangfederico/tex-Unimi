@@ -25,15 +25,17 @@ Esame: 60\% reti teoria (scritto 1:30h, 10 domande di teoria) 40\% reti laborato
 Martedì: 16:00 - 18:30 (aula: 100)\\
 Venerdì: 14:30 - 17 (aula: beta)\\
 
-Reti di elaboratori: sistema interconnesso di calcolatori, i protagonisti in questa rete sono:\\
-- le macchine utente, dette host computer, ogni host è un elaboratore che non dipende dal servizio offerto dalla rete.\\
-- la sottorete di comunicazione, è un sistema che si occupa della comunicazione delle macchine. Questo sistema è composto da un insieme di protocolli software e un insieme di infrastrutture fisiche (cavi e apparati di rete) per la comunicazione.\\\\
+Reti di elaboratori: sistema interconnesso di calcolatori, i protagonisti in questa rete sono:\begin{itemize}
+\item le macchine utente, dette host computer, ogni host è un elaboratore che non dipende dal servizio offerto dalla rete.
+\item la sottorete di comunicazione, è un sistema che si occupa della comunicazione delle macchine. Questo sistema è composto da un insieme di protocolli software e un insieme di infrastrutture fisiche (cavi e apparati di rete) per la comunicazione.
+\end{itemize}
 
-La sottorete di comunicazione è formata da componenti chiamati:\\
-- Router (instradatore): apparati diretti che permettono di passare da una rete ad un’altra rete, garantiscono l'instradamento e l'indirizzamento IP.\\
+La sottorete di comunicazione è formata da componenti chiamati:\begin{itemize}
+\item Router (instradatore): apparati diretti che permettono di passare da una rete ad un’altra rete, garantiscono l'instradamento e l'indirizzamento IP.\\
 I router non garantiscono l'affidabilità, l'affidabilità del singolo pacchetto è gestita a livello di host
-Il routing è la ricerca del percorso di instradamento migliore in un dato momento di tempo.\\
-- Gateway: ponte d'accesso è un dispositivo che opera a livello di rete. Il suo compito è quello di inoltrare i pacchetti verso l'esterno, il compito di terminare il trasferimento è lasciato al router.\\\\
+Il routing è la ricerca del percorso di instradamento migliore in un dato momento di tempo.
+\item Gateway: ponte d'accesso è un dispositivo che opera a livello di rete. Il suo compito è quello di inoltrare i pacchetti verso l'esterno, il compito di terminare il trasferimento è lasciato al router.
+\end{itemize}
 Vi sono vari modelli di rete, caratterizzati dalla loro \emph{tipologia}. Per rappresentarli possiamo utilizzare un modello geometrico (grafo), ovvero una raccolta di nodi e rami. Ogni nodo rappresenta un elemento della rete mentre un ramo rappresenta un elemento di connessione tra i nodi.\\
 Le principali famiglie di rete sono:
 \begin{itemize}
@@ -49,8 +51,8 @@ Nelle reti broadcast i nodi sono organizzati secondo una logica hub, in cui ogni
 
 Come possiamo rendere un messaggio \emph{"affidabile"}?\\
 Dobbiamo garantire che sia \textbf{corretto}, \textbf{in ordine}, e \textbf{non duplicabile}\\
-L'affidabilità è garantita con il meccanismo di ack, in particolare:\\
-Come facciamo a far sapere al mittente che un pacchetto è arrivato?\\
+L'affidabilità è garantita con il meccanismo di ack, in particolare:
+\subsection*{Come facciamo a far sapere al mittente che un pacchetto è arrivato?}
 Ack(nowledge): messaggio di conferma di arrivo di un dato. Dopo un tempo \emph{t}, se il pacchetto ack non viene ricevuto, il mittente sa che non è arrivato il messaggio; che dovrà essere riinviato. Di conseguenza deve essere introdotto un \textbf{buffer} che contiene i messaggi inviati, che dovranno essere riinviati nel caso in cui il trasferimento non sia effettuato con successo.\\
 Il tempo di andata e ritorno, dato da \(t_2 - t_0 = RTT\) è chiamato RTT, ovvero Round Trip Time, che è il \emph{PING}. Ne consegue che \(RTT/2 = T\), ovvero il tempo di latenza.	
 \begin{center}
@@ -514,14 +516,363 @@ Il componente LER1 (label edge router) associa un header che viene utilizzato da
 \textbf{La label switching table} contiene entries per ogni porta in entrata, ed ogni porta in uscita, così come labels da assegnare. Le labels cambiano ogni volta che il pacchetto passa per un LSR.
 \subsubsection*{Label edge router}
 \begin{center}
-\includegraphics[scale=0.5]{et1}\\ 
+\includegraphics[scale=0.5]{et1}\
 \end{center}
 I pacchetti non vengono inoltrati secondo l'IP Header (passando per la forwarding table), ma secondo un MPLS header, che viene integrato all'IP packet. Il label edge router provvede ad aggiungere/rimuovere l'intestazione MPLS dalla testa dei pacchetti IP, poiché MPLS ha senso solo ad ogni hop. E' funzionale solo a velocizzare il processo di switching ma è ininfluente a livello di routing.
 \begin{center}
 \includegraphics[scale=0.5]{newlabel}\\ 
 \end{center}
 - Il campo COS va ad identificare la regola di scheduling\\
-- Il campo label identifica la politica per il singolo hop, così come l'identificatore per la porta d'uscita.
+- Il campo label identifica la politica per il singolo hop, così come l'identificatore per la porta d'uscita.\\
+\subsection{Gestione delle congestioni | RED}
+Il Random early detection (o RED), è un meccanismo utilizzato per prevedere e prevenire l'insorgere della congestione nelle reti. Ogni router viene programmato perché tenga sotto controllo le proprie code, ma quando si accorge che una congestione è imminente viene inoltrato un segnale alla sorgente della congestione, che elimina anticipatamente dei pacchetti. 
+
+\subsection*{review}
+Code di priorità -> come gestisco l'instradamento nelle code? -> lookup type of service
+
+\section*{IPv6}
+Nato per sostituire IPv4 e la mancanza di indirizzi, aggiunge nuove funzionalità.
+\begin{center}
+\includegraphics[scale=0.5]{ipv6}
+\emph{4 parole da 32 bits}
+\end{center}
+Una caratteristica particolare di IPv6 è l'interoperabilità con i protocolli IPv4, questo viene fatto inglobando l'indirizzo a 32 bit all'interno dell'indirizzo IPv6. (vengono utilizzati i bits a destra)
+\subsection*{8 byte di parametri}
+\begin{itemize}
+\item version (4 bit), indica la versione del datagramma IP: per IPv6 è settato a 6 
+\item traffic class (8 bit) (corrisponde a type of service), si traduce come "classe di traffico", successore di ToS, classifica il pacchetto favorendo regole di routing e lo smistamento assegnando una classe di priorità, rispetto ad altri pacchetti provenienti dalla stessa sorgente
+\item flow label (20 bit), usata dal mittente per etichettare una sequenza di pacchetti come se fossero nello stesso flusso. Aiuta nella gestione del QoS (Quality of Service), nel controllo di flusso, anche se ancora in fase sperimentale. Per best-effort è settato a 0 .
+\item payload length (16 bit), è la dimensione del payload, ovvero il numero di byte di tutto ciò che viene dopo l'header. Eventuali estensioni dell'header sono considerate payload. Max a 64 KB, minimo a 536 B (perchè 536 B + 40 B di header = 576 B, minimo per far si che il pacchetto non venga frammentato) 
+\item next header (8 bit), va a puntare al prossimo header, può puntare\\
+- all'header del livello superiore (ad esempio TCP)\\
+- ad un ulteriore next header, attraverso un processo chiamato \emph{header extension}, che può a sua volta puntare ad un'altro next header (lista concatenata). La sequenza deve tuttavia terminare con TCP
+\item hop limit (8 bit), è il limite di salti consentito, praticamente è il TTL per IPv6, con default a 256
+\end{itemize}
+\subsection*{32 Byte per indirizzi}
+\begin{itemize}
+\item source address, 16 Byte per indirizzo sorgente 
+\item destination address, 16 Byte per indirizzo destinazione
+\end{itemize}
+\subsection*{Formato di un indirizzo IPv6}
+Un indirizzo IPv6 è rappresentato con 8 blocchi da 16 bit divisi da $:$. Questi blocchi per comodità vengono scritti in esadecimale, blocchi contigui di $0$ possono essere omessi e sostituiti con $::$.
+\begin{center}
+$16bit:16bit:16bit:16bit:16bit:16bit:16bit:16bit$\\
+$BA98 : 7654 : 3210 : 0000 : 0000 : 0000 : 0089$\\
+$BA98 : 7654 : 3210 :: 0089$
+\end{center}
+Per agevolare l'operazione di instradamento dei pacchetti IPv6, vengono definiti una serie di $Tiers$, in base alla grandezza del servizio:
+\begin{itemize}
+\item Tier1: organizzazioni a livello continentale, rappresentati da $registry, TLA$
+\item Tier2: organizzazioni a livello nazionale, rappresentati da $NLA$
+\item Tier3: organizzazione a livello locale, rappresentato da $SLA$
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.5]{routingtable}
+\end{center}
+$010$ rappresenta un prefisso che indica la comunicazione punto punto \\$registry$ il continente, $TLA$ la nazione, $NLA$ la zona intra-nazionale, $SLA$ la zona locale.\\
+L'interface ID è suddiviso in 16 bit per la sottorete, e 48 bit corrispondente all'indirizzo MAC dell'host.\\\\
+\section*{Livello 4 "Trasporto"}
+Il come inviare i messaggi è risolto nei livelli 1-3. Ora vediamo come mettere in comunicazione applicazioni da un host A a un host B (collegamento end-to-end). \\
+A livello 4 si spediscono e si ricevono segmenti. In particolare ci interessiamo del protocollo TCP, affidabile (e UDP, non affidabile, UDP è più semplice). I principali temi che vogliamo trattare sono l'affidabilità, e l'indirizzamento.\\\\
+Consideriamo un client ed un web server, come fanno i due dispositivi a distinguere i segmenti da un dispotivi all'altro? Ci troviamo quindi davanti ad un problema di smistamento, sia mentre effetuiamo un'operazione di request, sia mentre riceviamo una answer.
+\begin{center}
+\includegraphics[scale=0.5]{t1}
+\end{center}
+A livello 3 abbiamo il protocol selector, basato su ARP/RARP, a livello 4 invece, risolviamo il problema attraverso l'impiego di uno strumento chiamato porta, o socket. In particolare per gestire il trasferimento di segmenti a livello 4:
+\begin{itemize}
+\item associamo una porta ad un nome simbolico di servizio sorgente, che può essere un sito web, posta elettronica, etc., il valore è chiamato $P_{ID}Sorgente$ è fornito dal socket
+\item associamo una porta ad un nome simbolico di servizio destinatario, il valore è chiamato $P_{ID}Destinazione$ ed è definito a partire dalle well known ports.
+\end{itemize}
+La coppia \begin{center}
+$<P_{ID}Sorgente,P_{ID}Destinatario>$ \end{center}determina in maniera univoca la richiesta, che viene gestita dalla porta in destinazione secondo la politica definita. \\
+In totale le porte possibili sono $2^{16}$:
+\begin{itemize}
+\item dalla 0 alla 1023 sono le well known ports, che sono associate a servizi di standard (mail, web, etc.)
+\item dalla 1024 alla 49151 sono associate a servizi famosi
+\item le porte successive sono lasciate libere
+\end{itemize}
+Questo tuttavia non basta è intuibile diversi servizi abbiamo più porte dello stesso valore, ad esempio Google, Facebook, Microsoft hanno rispettivamente una porta $80$ da gestire. Entrano quindi in gioco gli indirizzi IP dei singoli servizi. Una singola request diventa quindi:
+\begin{center}
+$<P_{ID}Sorgente,P_{ID}Destinatario, IP_D, IP_S>$
+\end{center}
+Il valore di $IP_D$ è ricavato dal DNS, che vedremo più avanti, e intuitivamente il valore di $IP_S$ è ricavato in locale.
+\subsection*{TCP | web server}
+Consideriamo un web server che riceve $k$ requests, come fa a gestirle e restituire $k$ replies? \\In genere un web server gestisce più \emph{forks} per gestire in parallelo più requests, tuttavia queste non tutte possono avere la stessa porta altrimenti verrebbero mischiate tutte le requests. \\\\Assegniamo quindi una porta $(x, ... y)$ ad ogni singolo thread $(1, ... k)$, ed impieghiamo quindi una tabella che lavora similmente al NAT, che le indicizza, e smista le requests.
+\begin{center}
+\includegraphics[scale=0.5]{t2}
+\end{center}
+In questo modo se un $client_1$ genera una request, il traffico gestito da TCP è smistato al $fork_{client_1}$ del web server.
+\subsection*{Overview di TCP}
+TCP è il primo protocollo che vediamo che è orientato alla connessione, ovvero la capacità di associare univocamente un processo lato client con un processo lato server. 
+\begin{center}
+\includegraphics[scale=0.5]{t3}
+\end{center}
+Le connessione possono quindi trovarsi in 3 fasi, open, data transfer, e close.
+\subsection*{Header di TCP}
+\begin{center}
+\includegraphics[scale=0.5]{t4}
+\end{center}
+\begin{itemize}
+
+\item source port (16 bit), identifica il numero di porta sull'host mittente associato alla connessione TCP
+\item destination port (16 bit), identifica il numero di porta sull'host destinatario associato alla connessione TCP
+\item sequence number (32 bit), numero del segmento del dato da trasferire. Numera i Byte, perchè TCP considera payload come stringhe di Byte. È puntatore al primo Byte nel campo dati
+\item acknowledgment number (32 bit), ha significato solo se il campo ACK è impostato a 1. È usato solo dalla destinazione, che per convenzione indica il numero del segmento che si aspetta di ricevere (quindi successivo all'ultimo convalidato/arrivato).
+\item HL (Header Length o Data Offset), numero di parole da 32 bit presenti nel campo Options (header ha lunghezza variabile)
+\item Res. (Reserved) (4 bit), bit non utilizzati e predisposti per sviluppi futuri del protocollo
+\item code bits (6 bit), maschera di 6 bit che identifica il tipo di segmento. Più bit possono essere settati a 1, aggiungendo più informazioni in un singolo segmento. I possibili valori sono:\\
+- SYN: stabilisce una connessione\\
+- ACK: conferma della validità del campo\\
+- FIN: chiude la connessione\\
+- PHS: invio dei dati alla ricezione di questo segmento URG: urgente\\
+- RST: rifiuta una richiesta di connessione o ripristina i valori iniziali del numero\\
+di sequenza
+\item window size (16 bit), anche "Advertise Window", è la larghezza della finestra per spedire i frammenti. La dimensione è decisa a priori, prima di iniziare la comunicazione, e scelta in base alla dimensione massima di trasferimento del canale in uso e del buffer lato destinazione. Si usa per evitare la frammentazione 
+\item checksum, contrariamente al checksum del pacchetto IP (che riguardava solo l'header), questo riguarda tutto il segmento, cioè header + payload. Inoltre alcuni campi del pacchetto IP sono inclusi nella generazione di questo checksum e formano il cosiddetto \textbf{TCP pseudo header}
+\item urgent pointer (16 bit), denota il numero di Byte nel campo dati che deve essere subito consegnato all'applicazione che sta comunicando. Ha significato solo se il code bit "URG" è settato a 1 e indica lo scostamento in Byte a partire dal numero di sequenza dei dati urgenti del flusso
+\item options, usato per descrivere, ad esempio, la dimensione massima di un segmento (MSS - Maximum Segment Size). Se non specificata viene scelta di default a 536 Byte (poiché sommando header TCP e IP ottengo i famosi 576 Byte)
+\item payload, rappresenta i dati da trasmettere
+\end{itemize}
+
+\subsection*{Pseudoheader di TCP}
+Lo pseudoheader di TCP è creato a partire da\begin{center}
+ $<P_{ID}Sorgente,P_{ID}Destinatario, PSEC, SL>$\end{center} è utilizzato per calcolare il checksum. Lo pseudo header non viene spedito, ma viene costruito localmente da ogni macchina.
+ 
+\subsection*{Apertura di una connessione}
+A connessione chiusa:
+\begin{center}
+\includegraphics[scale=0.5]{t5}
+\end{center}
+\begin{itemize}
+\item il client manda un segmento con bit $SYN_1$, e come numero di sequenza un valore $x$.
+Il valore $x$ chiamato ISN, o Initial Sequence Number, è un valore pseudorandom, generato dal client e utilizzato in futuro come riferimento
+\item il server ha già allocato un buffer di ricezione (BR) per la gestione di request, e risponde con \begin{center}
+$SYN_1, ACK, ACK$ $x+1$, $SEQ$ $Y$ 
+\end{center}
+Per convenzione viene convalidato anche il pacchetto successivo, attraverso l'$ACK_{x+1}$, l'ACK è necessario TCP ogni messaggio deve essere validato.
+La $SEQ$ $Y$ è generato da server, e viene poi utilizzato come riferimento per tutti i successivi messaggi
+\item Il client risponde con \begin{center}
+
+$ACK, SEQ x+1$, $ACK$ $y+1$\\
+\end{center}
+La connessione è quindi stabilita
+\end{itemize}
+
+\subsection*{Data transfer}
+A connessione aperta:
+\begin{center}
+\includegraphics[scale=0.5]{t6}
+\end{center}
+Il campo Window Size nel segmento TCP serve a regolare quanti Byte inviare/poter ricevere.\\
+Il destinatario fa sapere quanti Byte può ricevere (se ha buffer di ricezione vuoto saranno uguali a quanto è grande il buffer). Man mano che il mittente invia blocchi di $N$ Byte, il destinatario occuperà il buffer con quei dati, e risponderà indicando la nuova dimensione (diminuita) del buffer di ricezione, cosicchè il mittente sappia quanti Byte mandare al massimo nel prossimo segmento che dovrà inviare.\\
+Se il server non può più ricevere, comunica al client che la sua window size è 0, e il client si metterà in attesa di una nuova comunicazione del server con window size > 0.
+In caso di perdita dell'ACK che aggiorna dal server al client la window size disponibile (window update) ci sono due strategie di recovery:\begin{itemize}
+\item Persistent timer (per la salvaguardia del client): ogni connessione è dotato di un timer chiamato persist timer, ogni qualvolta venga ricevuto un segmento con $window size = 0$ il persist timer è avviato (solitamente per 60 secondi). Se non viene ricevuto nessun aggiornamento viene generato un \emph{window probe} che richiede nuovamente al server l'ACK perduto. Se dopo $n$ probes non viene ricevuta nessuna risposta, il client chiude la connessione
+\item Keep Alive Timer (per la salvaguardia del server): il server ha un timer locale (solitamente settato a 2 ore), che allo scadere genera un \emph{keep alive probe} per verificare se il client è ancora attivo. 
+Se dopo $n$ probes non viene ricevuta nessuna risposta, il server chiude la connessione
+\end{itemize}
+
+\subsubsection*{Selective repeat | timer di ritrasmissione}
+Lo schema di comunicazione è a modello cumulativo, qualora un ACK non arriva, viene validato l'ultima sequenza corretta, in questo esempio è $ACK x+2001$ e dopo $n$ tempo viene reinoltrato il messaggio droppato
+\begin{center}
+\includegraphics[scale=0.5]{t7}
+\end{center}
+Dobbiamo tuttavia fare due considerazione:\begin{itemize}
+\item a lato ricevente stiamo lavorando secondo un modello selective repeat (e non go-back-n), quando non viene ricevuto un pacchetto, non dobbiamo inoltrare tutti i pacchetti a partire dal droppato, ma solo quello droppato
+\item il timer di trasmissione deve essere ben dimensionato, in base al tempo di trasmissione. \\\emph{ma come dimensioniamo il timer?} Non possiamo utilizzare il RTT (round trip time), in quanto può essere variabile, inoltre a livello 4 dobbiamo considerare i componenti di rete (router, switches etc.)\\ Vengono fatte delle stime, ed è poi sovradimensionato il timer.
+\end{itemize}
+\subsubsection*{Problematiche sul timer}
+\begin{itemize}
+\item grandezza del timer: Siccome siamo su internet, a quanto si dimensiona il timer RTO? Se troppo grande spreco tempo! RTO dipende dall'RTT, che può variare durante una connessione, quindi dovràà variare anche RTO. Inizialmente si parte con un valore di RTO relativamente elevato:
+\item fast retransmit: per evitare che una connessione si blocchi perché un timer è stato sovradimensionato o perché al server è arrivato un segmento non in ordine. Ogni volta che al server arriva un segmento non in ordine (ne manca uno in mezzo) manda un ACK specifico avvertendo che si è "fuori sequenza". Quando poi al server arriverà/arriveranno i segmenti mancanti manderà un ACK avvertendo che tutto è ritornato ok (ACK cumulativo). 
+Anticipa il reset del timer di ritrasmissione dopo aver ricevuto $n$ ack fuori sequenza. In particolare in questo esempio dopo 3 ACK fuori sequenza il timer è resettato, e il client reinvia il segmento.
+\begin{center}
+\includegraphics[scale=0.5]{t8}
+\end{center}
+\end{itemize}
+\subsection*{Ottimizzazione del data transfer}
+Consideriamo un utente che deve inviare una bassa quantità di dati alla volta, per esempio inoltrando un carattere alla volta, il traffico risulta fortemente oneroso in quanto ogni segmento inviato genera un ACK di risposta. 
+\subsubsection*{Delayed acknowledgements}
+Delayed acknowledgements consiste nel far attendere il server un tempo prefissato (200ms) dopo la ricezione di un segmento, e aspettare eventuali altri dati, così da inviare un unico ACK complessivo e ridurre quindi il numero di segmenti in rete. In caso di applicazioni utente che devono essere responsive (vedi telnet, server di echo), si potrebbe creare un delay inaccettabile per l'utente.
+\subsubsection*{Algoritmo di Nagle}
+L'algoritmo di Nagle cerca di raggirare il problema, in particolare  è una versione modificata del delayed acknowledgements, per cui un'entità TCP può avere un solo "segmento piccolo" alla volta, in attesa di ACK. In questo modo il client invia un segmento piccolo e mentre aspetta la ricezione dell'ACK del server, il suo buffer di invio si riempie, così che quando sarà nuovamente possibile inviare (alla ricezione dell'ACK spedito dal server) riesca ad inviare più informazioni in un unico segmento. In particolare viene creato anche un buffer a lato server, e solo qualora una data soglia di volume di dati per creare un segmento di risposta è raggiunto, esso viene inviato attraverso una tecnica chiamata piggybacking. 
+\subsubsection*{Algoritmo di Clark}
+algoritmo di clark, cerca di diminuire al minimo i window update, consiste nel compattare i window update lato server, cioè ritardare la spedizione del window update (dopo il window update 0) finchè il buffer di ricezione del server abbia raggiunto la Maximum Segment Size oppure se raggiunge la metà della memoria disponibile. In questo modo il server non informerà mai il client se la dimensione della finestra è piccola, e quest'ultimo non invierà mai segmenti contenenti una quantità ridotta di dati.
+
+\subsection*{Dimensionamento della finestra di trasmissione | congestion window}
+Dimensionare la finestra di trasmissione (o window congestion) che deve essere:
+\begin{center}
+$W_t/c = MIN(NET,BUF | RIC)$
+\end{center}
+TCP deve essere in grado di intuire lo stato di saturazione della rete, il minimo tra il la grandezza del buffer di ricezione, e dello stato della rete.  Siccome TCP può avere più connessioni simultanee e non sa la capacità del canale, ma lavora solo sulla grandezza della finestra di invio, concordata con il ricevitore, adotta un approccio cauto.\\
+Inizia scegliendo la finestra più piccola possibile, per poi aumentarla fino al limite imposto dal ricevitore. Quando avviene un errore si azzera tutto e si riparte.\\
+Nel caso non si verifichino errori (o perdita ACK), TCP divide il trasferimento dati in 2 fasi:
+\begin{itemize}
+\item Slow start, si trasmettono segmenti piccoli partendo dalla dimensione minima dei segmenti stabilita all'apertura della connessione e con dimensione finestra a 1. Ad ogni ACK ricevuto correttamente la dimensione della finestra raddoppia. Questa fase viene iterata fino a che non si raggiunge la soglia SST (Slow Start Threshold) (pari alla metà della dimensione massima della finestra).
+\item  Congestion Avoidance, all'inizio di questa fase la finestra di congestione ha
+come dimensione SST. Da questo punto in poi (sempre se non si verificano errori) TCP trasmette finestre aumentandone la dimensione linearmente (aggiungo 1 segmento alla finestra dopo aver ricevuto tutti gli ACK per la scorsa finestra). Raggiunta la soglia massima trasferibile, la dimensione non cambia più. La crescita diventa lineare
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.5]{t9}
+\end{center}
+La gestione nel caso di errore è definita all'interno della policy RFC 5681: 
+\begin{itemize}
+\item viene utilizzato RTO nel caso sia scaduto il timer di trasmissione, in quanto si ipotizza che la rete sia congestionata. Il fast retransmit prevedeva che il client aspettasse 3 ACK "fuori sequenza" prima di reinviare un pacchetto perso. Per il controllo della congestione questo non è considerato un errore grave, in quanto il server ha comunque ricevuto quasi tutti i pacchetti. Però alla ricezione del terzo ACK "fuori sequenza" si imposta un nuovo valore per SST pari all'attuale finestra dimezzata e si modifica comunque la grandezza della finestra di invio portandola al minimo tra l'SST iniziale e quello appena calcolato.
+\begin{center}
+\includegraphics[scale=0.5]{t10}\\
+\emph{Flightsize = numero di byte in viaggio}
+\end{center}
+\item Il fast recovery salta la fase di slow start, e riparte direttamente
+\end{itemize}
+
+\subsection*{Dimensionamento del timer di ritrasmissione}
+Andiamo ora a vedere come TCP va a dimensionare. Il timer di ritrasmissione basato su uno storico sui valori raccolti durante la connessione, utilizzati per ricavare due valori, calcolati all'arrivo di ogni segmento: \begin{center}
+$D_h = \alpha * D_h + (1 - \alpha) |RTT_h -M|$\\
+$RTT_h = \alpha RTT_h + (1-\alpha)M$\\
+ove h rappresenta un valore storico, e $\alpha = 7/8 = 0,9$
+$RTO = RTT + 4D$
+\end{center}
+Ad ogni misura fatta, quindi, il valore tende a scostarsi poco. Ogni volta che viene inviato un segmento, viene generato una misura che determina il nuovo valore di deviazione
+
+\subsection*{Retransmission ambiguity problem}
+I calcoli che abbiamo visto fin'ora tengono conto di una connessione perfetta, senza segmenti persi, cosa succede se un segmento viene perso o in caso di errore? Se per esempio il mittente non riceve un ACK su un segmento inviato, dopo aver aspettato il RTO il segmento è reinviato, ma l'RTT del segmento quanto è?
+\begin{center}
+\includegraphics[scale=0.5]{rtt}\\
+\emph{esempio se scegliessi $RTO_1,  RTO_2$}
+\end{center}
+L'RTT diventa quindi il doppio del valore precedente, per evitare di sottostimare. Questo principio è chiamato politica di Karn.
+\begin{center}
+\includegraphics[scale=0.5]{rtt1}
+\end{center}
+Dopodiché riparto come se avessi ricevuto il primo ACK.
+
+\subsection*{Opzione timestamp}
+Nella realtà per finestre piccole (connessioni brevi) TCP fa una sola stima iniziale per il calcolo dell'RTT. Per finestre grandi invece tale stima viene fatta ogni 2 o 3 segmenti trasmessi. Se voglio avere stime più frequenti ciò va dichiarato in fase di apertura della connessione, specificando l'opzione timestamp nell'header TCP.\\
+Ogni entità TCP possiede un time-out a 32 bit incrementato ad intervalli compresi tra 1ms e 1s. Per ogni segmento inviato, il mittente legge il valore del timer e lo inserisce nel segmento in corrispondenza del campo timestamp value.\\
+Quando il destinatario riceve il messaggio, risponderà con il rispettivo ACK e includerà nel campo timestamp echo reply il valore letto nel campo timestamp value del segmento ricevuto. Così facendo, quando l'ACK è ricevuto dal mittente, questi può fare la differenza tra il valore attuale del suo time-out e quello scritto nell'ACK, per stimare l'RTT.
+\begin{center}
+\includegraphics[scale=0.5]{timestamp}
+\end{center}
+\
+
+\subsection*{S-ACK | RFC 2048}
+Invece che gli ACK cumulativi, si invia un ACK contenente le informazioni sull'ultimo segmento ricevuto in sequenza e l'ultimo segmento che potrebbe essere fuori sequenza. Quando il client riceve un ACK che indica un "fuori sequenza", viene spedito il segmento corretto. Il S-ACK viene dichiarato in fase di apertura della connessione.\\
+Il selective ACK è un acknowledge contenente l’ultimo pacchetto ricevuto in sequenza e l’ultimo pacchetto che potrebbe essere fuori sequenza. Appena ricevuto un ACK fuori sequenza, viene spedito il pacchetto corretto. Funziona anche per multiple loss.\\
+È molto simile alle politiche di recovery del livello DataLink. S-ACK viene settato come attivo nel primo segmento SYN che il mittente manda al destinatario, ovviamente come campo Opzione.
+\begin{center}
+\includegraphics[scale=0.5]{sack}
+\end{center}
+
+\subsection*{Chiusura della connessione}
+\begin{center}
+\includegraphics[scale=0.5]{closeee}
+\end{center}
+Utilizziamo il bit $FIN = 1$, in particolare il client effettua una chiusura attiva, il server una chiusura passiva. Essendo TCP una connessione bidirezionale, è possibile chiudere solo un lato della connessione, mentre l’altro rimane funzionante e deve essere chiuso anch’esso.\\
+Quando il client esegue la close:\begin{itemize}
+\item Manda un messaggio con bit FIN attivo al server
+\item Il processo server riceve il codice EOF ed effettua anch’esso la close validando il client
+\item Anche il server chiude, quindi manda al client un segmento con FIN attivo
+\item il client valida con ACK il FIN del server
+\end{itemize}
+Il client, dopo la FIN ricevuta dal server, aspetta un tempo regolato da un timer pari a 2MSL; entro questo tempo è ragionevole pensare che, se l’ACK mandato dal client che conferma la chiusura del server è andato perso, un altro FIN arrivi al client dal server. Il client allora potrà così rispondere nuovamente al server prima di chiudere.\\
+MSL è il Maximum Segment Lifetime, cioè il massimo intervallo nel quale un segmento può viaggiare in Internet prima di essere droppato, quindi relativo al campo TTL dell’header IP.
+\begin{center}
+\includegraphics[scale=0.5]{closeup}
+\end{center}
+
+\section*{UDP | User Datagram Protocol}
+UDP non fornisce affidabilità, ma è più veloce di TCP. Non esiste il concetto di finestra: appena un segmento è pronto viene spedito (non vengono aperte e chiuse connessioni). Per la sua natura, si tende ad usare UDP per informazioni di piccole dimensioni, in modo da evitare frammentazione. In UDP quindi se i segmenti vengono persi o risultano corrotti, sarà il protocollo a livello applicazione che si occuperà di ritrasmetterli. Un esempio di utilizzo di UDP è il protocollo BGP il quale scambia i suoi path vector utilizzando UDP appunto. In sunto: no connessioni, nessuna aggiunta al servizio del livello IP, appena pronto un segmento, questo viene inviato, la chiusura è locale (non si informa l'altra parte), non ci sono ACK, nessun controllo, molto più veloce di TCP, non viaggia frammentato, ma in un'unica entità (se necessaria frammentazione viene fatto a livello applicazione)
+\begin{center}
+\includegraphics[scale=0.5]{udp}
+\end{center}
+\begin{itemize}
+\item UDP length è dimensione del segmento, tuttavia UDP non è affidabile, solitamente si spediscono segmenti con lunghezza massima di 8192 byte, anche se la grandezza massima è 65535 byte
+\item checksum è un campo opzionale, calcolato in base all'header, pseudoheader (source ip, destination ip etc), payload
+\end{itemize}
+Dato che il protocollo non introduce overhead è efficiente.
+\subsection*{Considerazioni su UDP}
+\begin{itemize}
+\item Timer virtuale (o logico):
+Tecnica per gestire la coda dei timer, ogni segmento ha un timer associato e per ciascuno di essi si ha un RTO. Poiché ogni finestra dovrebbe possedere un proprio timer, nel caso la dimensione fosse di 32 sarebbe difficile tenere 32 timer contemporaneamente. Si ricorre dunque a liste puntate contenenti il valore di tempo da aggiungere al valore del timer precedente. Si ricorre a un descrittore il quale indica per differenza l’elapsed time (timer di scadenza).
+\begin{center}
+\includegraphics[scale=0.5]{fjia}
+\end{center}
+\end{itemize}
+
+
+\section*{Livello 7: Applicazione}
+Tutti i livelli dall’uno al quattro, hanno una funzionalità ben precisa. Il livello 7 è anomalo da questo punto di vista, in quanto fonde in se funzionalità diverse, tante quante sono i servizi offerti all’utente finale. In particolare noi vedremo:
+\begin{enumerate}
+\item SMTP: posta elettronica
+\item FTP : file transfer
+\item DNS: risolutore di nomi logici in indirizzi IP
+\item HTTP: web protocol
+\item DHCP: è implementato a livello 7 ma offre funzionalità di livello 3.
+\end{enumerate}
+Nella suite di protocolli TCP/IP, dato un IP address e una porta, i servizi forniti da TCP e UDP permettono a due AP di comunicare in modo trasparente, e infatti non importa che i due AP si trovino sulla stessa macchina, nella stessa sottorete o in due punti diversi del globo. TCP/UDP non si interessa del proprio payload, ma si limita solo a trasferirlo da un interlocutore all’altro: potrebbe quindi essere necessario un metodo per verificare che la sintassi e la semantica dei messaggi tra le due AP sia la stessa.\\
+Finora le tecniche ed algoritmo per identificare un partner nella rete abbiamo visto:
+\begin{itemize}
+\item MAC – Ethernet (livello 2)
+\item IP-Address (livello 3)
+\item Socket (livello 4)
+\item DNS (livello 7): trasferisce da IDN (Internet Domani Name) a NDN (Network Domain Name).
+\begin{center}
+$<nome> \rightarrow <ip>$\\
+Ove nome può essere www.di.unimi.it, rossi@di.unimi.it etc.\\
+$\rightarrow$ è un'operazione fatta da DNS
+\end{center}
+\end{itemize}
+\subsection*{DNS | Domain Name System}
+Un AP che vuole comunicare con un corrispondente AP deve conoscere l’indirizzo IP e la porta di quest’ultima. Come sappiamo, la porta sarà ricavabile facilmente, essendo una porta nota associata a quel particolare AP; ma l’indirizzo IP?\\
+Per facilitare la ricerca di un indirizzo IP, il DNS permette ad ogni entità presente sulla Rete di possedere, oltre all’indirizzo IP, un nome simbolico. DNS (RFC 1034, 1035) si occupa quindi dell’associazione nome-indirizzo IP, e alla mappatura da uno all’altro prima dell’apertura della connessione. Consideriamo i seguenti esempi:
+\begin{center}
+rossi@dico.unimi.it\\
+@ = identificatore del servizio (mail)\\
+dico.unimi.it = nome del dominio\\
+\par\noindent\hrulefill\par
+www.dico.unimi.it\\
+www = identificatore del servizio\\
+dico.unimi.it = nome del dominio
+\end{center}
+\subsection*{Struttura di DNS}
+Tutti i dati che vengono usati dal DNS sono chiamati domain space name (spazio dei nomi di dominio) e sono indicizzati per nome. La struttura è gerarchica, permettendo l'amministrazione in maniera distribuita, e l'assegnazione di nomi in relazione alla locazione geografica.
+\begin{center}
+\includegraphics[scale=0.5]{7}
+\end{center}
+\begin{itemize}
+\item Generic Domains: sono quei domini che esistevano quando Internet era ancora relativamente piccola e quindi essi bastavano per identificare una particolare organizzazione (nati in america)
+\item Country Domains, nati quando Internet è cresciuta, introducono domini specifici per ogni nazione
+\end{itemize}
+Per ogni dominio esiste un DNS che è un server che gestisce lo spazio dei nomi.dominio.
+
+\subsection*{Resource records}
+\begin{center}
+\includegraphics[scale=0.5]{73}
+\end{center}
+Ogni dominio può avere informazioni aggiuntive rispetto al solo indirizzo IP, queste sono salvate all'interno di uno o più resource records, indicizzati in base al nome di dominio relativo.
+\begin{center}
+\includegraphics[scale=0.5]{74}
+\end{center}
+Trovare un indirizzo IP ad un servizio può richiedere più di un accesso al DNS
+\begin{itemize}
+\item Domain name, è il nome di dominio a cui il record è correlato. Come specificato in figura, il formato prevede l’utilizzo di un counter di un byte prima di ogni etichetta, che ne determina la lunghezza. L’ultimo carattere è sempre lo 0, che rappresenta la root.
+\item Type, indica il tipo di record, che può essere uno di quelli specificati in tabella. Ad esempio A indica che il record contiene un indirizzo IP in forma binaria, mentre PTR un indirizzo IP in notazione decimale puntata; HINFO indica la presenza di informazioni sul tipo dell’host e
+sul sistema operativo, mentre MX contiene un’e-mail gateway che si può utilizzare per instradare messaggi di posta.
+\item Time To Live, indica il tempo in secondi entro i quali l’informazione contenuta nel record è valida (necessaria per motivi di caching, il valore tipico è 2 giorni).
+\end{itemize}
+
+\subsection*{Risoluzione dei nomi}
+\begin{center}
+\includegraphics[scale=0.5]{71}
+\end{center}
+Associati a ogni zona troviamo quindi un primary (name) server, ma possibilmente anche uno o più secondary (name) server: il primo contiene effettivamente i records relativi alla sua porzione del domain name space, mentre i secondi mantengono una cache dei dati contenuti nel primo.\\
+Se ogni primary server potesse parlare con tutti gli altri primary server, l’overhead sarebbe altissimo; si è quindi deciso di non far conoscere ai primary server l’indirizzo IP dei suoi omonimi, ma invece di permettere il contatto solo con un insieme non esteso di top-level root name servers, che mantengono le coppie nome-indirizzoIP di tutti i primary server e, a ogni richiesta, comunicano quale primary server interpellare.
+\subsection*{Recursive name resolution}
+Questo metodo di risoluzione del nome prende il nome di recursive name resolution, e quello che segue è un esempio del suo uso, nel quale si richiede la risoluzione del nome sprint.com. 
+\begin{center}
+\includegraphics[scale=0.5]{72}
+\end{center}
+
 
 
 \end{document}  

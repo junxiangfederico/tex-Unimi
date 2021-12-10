@@ -292,9 +292,9 @@ In particolare AES:
 \begin{center}
 \includegraphics[scale= 0.4]{AES}
 \end{center}
-\emph{Add-round key}\\
+\subsection*{Add-round key}
 E' l'operazione di "whitening" e ha l'obiettivo di neutralizzare il potenziale attacco basato su plaintext particolari (tutti 0, tutti 1 etc), consiste in un'operazione di XOR con la chiave colonna per colonna.\\\\
-\emph{$Round_n$}\\
+\subsection*{$Round_n$}
 Le operazioni all'interno del $round_n$ sono svolte 9 volte e sono:
 \begin{itemize}
 \item Substitute bytes: corrisponde alle s-box in DES. in base ai valori presenti nello stato, vengono presi i valori all'interno di una matrice. Le s-box in AES sono di dimensione $16 * 16$\\
@@ -330,7 +330,7 @@ Dopo aver svolto 9 volte le operazioni nel round, vengono effettuate nuovamente 
 L'output del decimo round è il ciphertext.\\\\
 \emph{Round keys | Key schedule}\\
 
-\emph{AES-XTS}
+\subsection*{AES-XTS}
 \begin{center}
 \includegraphics[scale= 0.4]{aesxts}\\
 \end{center}
@@ -423,7 +423,7 @@ $C^d = M$ $mod$ $n$
 \textbf{Il valore e}\\
 Il valore $e$ è un valore casuale, che tuttavia deve essere scelto tale che valga la seguente condizione $MCD(e, \phi(n))=1$ (con l'applicazione dell'algoritmo di Euclide)\\ \emph{Ma perché viene scelto} $2^{16}+1$ \emph{solitamente?}\\
 Consideriamo dove viene applicato: $m^e$ mod $n$, il valore $2^{16} = 65537$ in codifica binaria è: $10000000000000001$\\
-Possiamo vedere che la compaiono molti 0, e pochi 1, ogni volta che compare 1 dobbiamo calcolare, quindi se minimizziamo il valore possiamo ridurre il numero di calcoli da effettuare. L'1 finale ci serve perché dobbiamo utilizzare un numero dispari. \\\\Il valore 65537 è scelto perché è un valore sufficientemente grande, che supera di un numero arbitrario di volte la $n$ nel modulo, aumentando lo sforzo computazionale richiesto al momento del calcolo della radice. In particolare quando andiamo a fare il bruteforcing, più grande è il valore $e$, più alto il valore che dobbiamo bruteforcare\\\\
+Possiamo vedere che la compaiono molti 0, e pochi 1, ogni volta che compare 1 dobbiamo calcolare, quindi se minimizziamo il valore possiamo ridurre il numero di calcoli da effettuare. L'1 finale ci serve perché dobbiamo utilizzare un numero dispari. Il valore è in particolare $e$ perché deve essere coprimo con $d$, verificabile calcolando l'inverso moltiplicativo \\\\Il valore 65537 è scelto perché è un valore sufficientemente grande, che supera di un numero arbitrario di volte la $n$ nel modulo, aumentando lo sforzo computazionale richiesto al momento del calcolo della radice. In particolare quando andiamo a fare il bruteforcing, più grande è il valore $e$, più alto il valore che dobbiamo bruteforcare\\\\
 \textbf{Il valore d}\\
 Il valore $d$ è calcolato utilizzando l'algoritmo esteso di Euclide\\
 \textbf{La fase di decryption ed encryption}\\
@@ -526,9 +526,9 @@ Teorema di Fermat: \\$a^{p-1}\equiv$ mod $p$\\
 Allora $1^{432} * 2^{10} $ mod 101\\
 Infine: $1024$ mod $101 = 14$
 \end{center}
-\subsection*{Attacking RSA}
-Siccome il cifrario RSA è stato introdotto nel 1970, durante gli anni sono stati eseguiti numerosi attacchi, che vertono sulle problematiche algoritmiche, matematiche ed ingegneristiche. \\\\
-\emph{$\phi$(n) accessibile}\\
+\section*{Attacking RSA}
+Siccome il cifrario RSA è stato introdotto nel 1970, durante gli anni sono stati eseguiti numerosi attacchi, che vertono sulle problematiche algoritmiche, matematiche ed ingegneristiche. 
+\subsection*{$\phi$(n) accessibile}
 Consideriamo un caso in cui l'attaccante sia in grado di accedere al valore $\phi(n)$, magari attraverso ad un dump della memoria dopo che un programmatore l'ha utilizzato, senza cancellare il valore. Siccome i valori della chiave pubblica sono $(n, e)$, abbiamo i seguenti valori disponibili: $(n, e, \phi)$. Se effettuiamo:
 \begin{center}
 $n-\phi(n)+1 =$\\
@@ -536,9 +536,9 @@ $=pq-[(p-1)(q-1)]+1=$\\
 $=pq-[pq-p-q+1]+1=$\\
 $=p+q$
 \end{center}
-Deduciamo che se troviamo $\phi$ possiamo ricavare $p+q$. \\Consideriamo ora che $n=p*q$
+Deduciamo che se troviamo $\phi$ possiamo ricavare $p+q$. \\Consideriamo ora che $n=p*q$ e $\phi(n) = (p-1)(q-1)$
 \begin{center}
-$ax^2+bx+c$ \\ove $c = p*q = n$, $a =1$, $b = p+q$\\
+$ax^2+bx+c$ \\ove $c = p*q = n$, $a =1$, \\$b = p+q$, che ricaviamo a partire da $n-\phi(n)+1$\\
 $x_1x_2 = c/a$\\
 $x_1+x_2 = -b/a$
 \end{center}
@@ -546,11 +546,675 @@ Possiamo quindi ricavare che\begin{center}
 $x^2-x(n-\phi(n)+1)+n=0$\\
 Se risolviamo con il $\Delta$ possiamo ricavare i valori $x_1 = p $ e $x_2 = q$
 \end{center}
+\subsection*{Caso valido su d}
+Riguardareeeeee
+\begin{center}
+Se MCD(a,n) = 1
+Allora esiste un vlore s,t tle che s >= 0; t > 0
+Allora in questo caso esiste 
+\end{center}
 
-Considerando:\begin{center}
-$m^e = a$ mod$ $n$\\
+\subsection*{Casi particolari su d}
+Per l'algoritmo di Euclide esteso abbiamo messo come condizione che \begin{center}
+$MCD(a,n) = d = 1$
+\end{center}
+Ma cosa succede se non fosse così?
+\begin{center}
+$MCD(a,n) = d != 1$\\
+$ax \equiv b$ $mod$ $n$
+\end{center}
+Possiamo dire che:\begin{itemize}
+\item se d non divide b, allora non esiste soluzione per $ax \equiv b$ $mod$ $n$
+\item se d divide b, allora esiste soluzione per $ax \equiv b$ $mod$ $n$, ma non è unica, la congruenza iniziale avrà $d$ soluzioni. Per decifrare provare più soluzioni, scartando quelle che non mi interessano
+\begin{center}
+$ax \equiv b$ $mod$ $n$\\
+$ax/d \equiv b/d$ $mod$ $n/d$
+\end{center}
+Chiamiamo la prima soluzione $x_0$, per calcolare le successive soluzioni possiamo
+\begin{center}
+$x_0 + n/d$, $x_0 + 2n/d$ ,..., $(d-1)(n/d)$
+\end{center}
+Le soluzioni sono quindi $(d-1)$
+
+\end{itemize}
+
+\subsection*{m/4 cifre esposte di p, q, d}
+Supponiamo di avere\begin{center}
+$n = p * q $ di $n$ cifre
+\end{center}
+Se siamo in grado di recuperare le prime $m/4$ cifre di $p$ o di $q$ esiste un attacco in tempo polinomiale in grado di fattorizzare $n$. Questo attacco è stato successivamente esteso, in particolare se sono in grado di recuperare le prime $m/4$ cifre di $d$  sono ancora una volta in grado di rompere RSA
+\subsection*{Common modulus attack}
+Consideriamo:
+\begin{center}
+$Alice = (e_A, n)$ | $Bob = (e_B, n)$
+\end{center}
+Cosa succede se sia Alice che Bob utilizzano uno stesso $p,q$, e di conseguenza $n$?
+\begin{center}
+$M^{e_A} = C_1$ $mod$ $n$\\
+$M^{e_B} = C_2$ $mod$ $n$
+\end{center}
+Consideriamo un terzo soggetto Carl, che deve inoltrare un messaggio ad Alice e Bob, cifra i messaggi:
+\begin{center}
+Crittotesto per Alice: $M^{e_A} = C_1$ $mod$ $n$\\
+Crittotesto per Bob: $M^{e_B} = C_2$ $mod$ $n$
+\end{center}
+Se Eve è in grado di recuperare i crittotesti $C_1$ e $C_2$, e nota che gli $n$ di Bob e Alice sono congruenti
+Consideriamo \begin{center}
+$MCD(C_1, n ) = 1$\\
+\end{center}
+\begin{center}
+\includegraphics[scale= 0.7]{exponent}
+\end{center}
+\begin{center}
+\includegraphics[scale= 0.7]{exponent2}
+\end{center}
+Come possiamo vedere Eve è stata in grado di recuperare il messaggio $m$ sfruttando una vulnerabilità $n$ comune
+\subsection*{Low exponent attacks}
+Consideriamo $(e,n)$, \begin{center}
+$d* e \equiv 1$ $mod$ $\phi(n)$, con d$\in [1, ..., \phi(n)]$\\
+Se $d < 1/3\sqrt[4](n)$
+\end{center} 
+Esiste un algoritmo in grado di attaccare la chiave in pochi millisecondi
+\subsection*{Short plaintext attack}
+Attacco probabilistico attuabile nel caso in cui un plaintext sia troppo piccolo, in particolare un plaintext cryptato con DES avrà ordine di grandezza di $m = 10^{17} \equiv 2^{56}$. Il valore $m$ è ri-scrivibile come \begin{center}
+$m = a*b$
+\end{center}
+$a,b$ avranno, con una probabilità non trascurabile, un ordine di grandezza di $10^9$ (valore preso accettabile per un computer diffuso)
+Li suddivido ora in due array di $10^9$ elementi, in particolare ricavati rispettivamente con
+\begin{center}
+$array_1$ = $c*x^{-e}$ $mod$ $n$\\
+$array_2$ = $y^e$ $mod$ $n$\\
+Con $x, y$ che sono gli indici negli array
+\end{center}
+\begin{center}
+\includegraphics[scale= 0.7]{m1}
+\end{center}
+In una posizione arbitraria in ogni array sarà possibile trovare 2 celle con lo stesso valore, uguagliando il contenuto dei due array è possibile ricavare il messaggio.
+\begin{center}
+\includegraphics[scale= 0.7]{m2}
+\end{center}
+In particolare ho trovato i fattori $x * y$, ricavando cosi il valore $m$
+\subsection*{Padding per short plaintexts | OAEP}
+Per raggirare il problema di plaintext troppo corto viene aggiunto un padding, ovvero una stringa definita, inserita in coda al plaintext. In particolare per RSA viene utilizzato l'\emph{OAEP} (optimal asymmetric encryption padding), il cui valore è generato da una funzione Feistel (la parte della generazione del padding è ignorata). Per criptare plaintext corti, quindi, viene generato un padding di lunghezza $x$.\\
+Dato un messaggio troppo corto $M$ di lunghezza $i$, il messaggio unito col padding $P$ con lunghezza $k$ diventa:	\begin{center}
+$M_i \rightarrow$ $M_iP_k$
+
+\end{center}
+$M_iP_k$ è poi utilizzato per produrre il ciphertext
+
+
+\subsection*{Teorema cinese dei resti}
+Permette di fare il calcolo dell'inverso attraverso la risoluzione di sistemi, che permette di scaricare il carico computazionale al server
+Consideriamo un set di numeri interi o naturali:
+\begin{center}
+$for$ $i$ 	$P_i/Z_i = r_1r_2...r_{i-1}r_{i}$\\
+$for$ $i$ 	$Q_i/Y_i = Z^{-1}_i$ $mod$ $r_i$\\
+$x = a_1y_1z_1+ ... + a_ny_nz_n$\\
+\end{center}
+Questo viene fatto perché il calcolo dell'inverso moltiplicativo nel metodo tradizionale è un'operazione dispendiosa. La risoluzione del sistema risulta meno dispendiosa, e ci permette anche a scaricare il server ad un'altra location.
+\subsection*{Lemma del teorema cinese dei resti}
+Consideriamo due interi $m, n$ coprimi fra loro, ovvero:
+\begin{center}
+$m,n$ t.c. $MCD(m,n) = 1$
+\end{center}
+Se $c$ un altro intero è multiplo di $m$ e $n$ \begin{center}
+ovvero $c = m*k$, $c = n*l$\end{center}
+ allora 
+ \begin{center}
+ $c$ è multiplo di $(m*n)*x = c$
+ \end{center}
+\subsection*{Lemma del teorema cinese dei resti}
+Consideriamo:\begin{center}
+$(m^e)^d = m$ $mod$ $n$
+\end{center}
+Consideriamo 2 dei 4 casi possibili su $m$
+\begin{center}
+$MCD(p,m) \neq 1 = d$
+\end{center}
+Allora $p$ ed $m$ hanno qualcosa in comune, in particolare $d=  p$ , e $p | m$, di conseguenza
+\begin{center}
+$M \equiv 0$ $mod$ $p$\\
+Consideriamo $e*d = 1$ $mod$ $\phi(n)$\\
+$M^{ed} \equiv M^{k(p-1)(q-1)+1}$ $mod$ $p$\\
+\end{center}
+\emph{TO REVIEW}
+
+\subsection*{Timings attacks}
+Un attacco notato per la prima volta da uno studente della Stanford 20 anni dopo l'implementazione di RSA. Questo attacco espone informazioni private misurando l'ammontare di tempo richiesto o analizzando l'oscillazione durante le operazioni svolte sulla chiave privata.\\
+Possiamo raggirare questa problematica offuscando l'implementazione, rendendo il tempo d'esecuzione costante (per esempio introducendo una serie di nop), in alternativa attraverso la tecnica di sliding windows, si effettuano i calcoli su un subset di bits. 
+
+\section*{Chiavi RSA}
+Consideriamo i valori $p,q$, due numeri primi, abbiamo detto che questi valori devono essere arbitrariamente grandi per garantire un buon grado di sicurezza\\
+\emph{Ma come verifichiamo che un numero sia adatto?}\\
+Siccome non possiamo utilizzare un algoritmo deterministico per determinare $n$, in quanto il calcolo dei numeri primi non è deterministico, utilizziamo un approccio probabilistico. Andiamo a verificare il valore $n$ con una serie di test per escludere valore inadatti.\\
+In modo per determinare un valore $n$ adatto è il seguente:
+\begin{itemize}
+\item determiniamo un lower bound di $10^{100}$, determiniamo un valore $P_0 = \cong10^{40}$
+\item verifichiamo con $P_0$ con Miller Rabin
+\item determiniamo un valore $k$ tale che $P_o * k$ $\cong$ $10^{100}$, $k$ sarà dell'ordine di $10^{60}$
+\item $p_0 * k+1 = p$, applichiamo Miller Rabin $n$ volte, se passa, $p$ è primo
+\end{itemize}
+Questo ci permette di evitare l'attacco di Pollard in quanto il valore è $p-1$ è sicuramente un valore non basso.
+\subsection*{Test di primalità di Fermat}
+Consideriamo
+\begin{center}
+$n, x, y$ tale che $x^2 \equiv y^2$ $mod$ $n$\\
+se $n \neq \pm y \rightarrow$ $n$ è composto
+\end{center}
+In particolare
+\begin{center}
+$MCD(x-y; n)$ fornisce un fattore di $n$
+\end{center}
+Consideriamo ora \begin{center}
+$n$ un intero arbitrariamente grande\\
+$\pm a < n-1$\\
+se $a^{n-1} = d$ $mod$ $n$\\
+Ovvero che $a^{n-1} \neq 1$ $mod$ $n$
+\end{center}
+allora possiamo concludere che $n$ è  un numero composto, per il piccolo teorema di Fermat.
+se invece: 
+\begin{center}
+se $a^{n-1} = 1$ $mod$ $n$
+\end{center}
+Non possiamo concludere nulla su $a$. Il teorema piccolo di Fermat è quindi utilizzato per verificare che un numero è composto.\\
+
+Siccome non siamo stati in grado di determinare nulla su $a$, utilizziamo un altro test, in particolare 
+il test di Miller-Rabin
+\subsection*{Test di primalità di Miller Rabin}
+Consideriamo un valore primo dispari $n$ da verificare
+\begin{center}
+$n-1 = 2^k * m$
+\end{center}
+Consideriamo: 
+\begin{center}
+$a < n-1$\\
+\end{center}
+Andiamo ad applicare l'algoritmo di Miller Rabin
+\begin{center}
+$b_0 = a^m$ $mod$ $n$
+\end{center}
+Se $b_0$ è uguale a \begin{itemize}
+\item +/- 1 allora $n$ è probabilmente primo
+\item altro, allora proseguiamo con $b_1$
+\end{itemize}
+\begin{center}
+$b_1 = b^2_0$ $mod$ $n$
+\end{center}
+Se $b_1$ è uguale a \begin{itemize}
+\item +1 allora $n$ è composto
+\item -1 allora $n$ è probabilmente primo
+\item altro, allora proseguiamo con $b_2$
+\end{itemize}
+In particolare $b_2$ viene calcolato nella stessa maniera in cui è calcolato $b_1$, elevando alla seconda il valore $b_{m-1}$ e modulando.\begin{center}
+$b_k = (b_{m-1})^2$ $mod$ $n$
+\end{center}
+L'algoritmo termina quando calcoliamo il valore $b_{k-1}$, in particolare se $b_{k-1}$ è uguale a \begin{itemize}
+\item +1 allora $n$ è composto
+\item -1 allora $n$ è probabilmente primo
+\item altro, allora scegli un altro valore $n$ da verificare
+\end{itemize}
+L'algoritmo di Miller Rabin ha una probabilità di errore del 25\%, un risultato su 4 è errato. 
+
+Tuttavia 25\% non è soddisfacente, per mitigare la probabilità l'algoritmo di Miller Rabin è applicato più volte su $j$ valori diversi, in particolare se la probabilità è 25\% per una verifica, per 10 verifiche la probabilità di errore diventa
+\begin{center}
+$(1/4)^{10}$
+\end{center}
+I valori che passano il test di Fermat sono chiamati \emph{pseudoprimi}, mentre quelli che passano sia Fermat che Miller Rabin sono chiamati \emph{pseudoprimi forti}
+Consideriamo \begin{center}
+$n = 13 \rightarrow n-1 = 12 = 2^2*3$
+prendiamo a = 11\\
+$b_0 = 11^3$ $mod$ $13$
+$b_0  = 5$
+$b_1 = 25 mod 13 -> 12$
+$b_2 = 144 mod 13$
+\end{center}
+Le banche utilizzano Fermat, Miler Rabin, Solovay–Strassen per effettuare test di primalità.
+
+
+\subsection*{Fattorizzazione di n}
+Dato un valore $n$ composto, come possiamo fattorizzarlo nei valori $p, q$?
+Introduciamo la tecnica di fattorizzazione di Fermat. Consideriamo $n,i,j$ tale che
+\begin{center}
+$n+i^2 = j^2$
+\end{center}
+Allora possiamo fattorizzare $n$, infatti:
+\begin{center}
+$n = j^2 - i^2=$\\
+= (j+i)(j-i)
+\end{center}
+Ad esempio consideriamo $n = 295927$
+\begin{center}
+$n+1^2 = j^2$
+\end{center}
+se è possibile abbiamo finito, senò proseguiamo:
+\begin{center}
+$n+2^2 = j^2$\\
+$n+3^2 = 295936 = 544^2$\\
+$n = (544+3)(544-3)=$\\
+$n = 547 * 541$
+\end{center}
+Abbiamo trovato che $p = 547, q = 541$. La difficoltà sta nel trovare i valori $i, j$, in quanto la ricerca di tali valori è lenta.
+\subsection*{Fattorizzazione di n | algoritmo di Pollard}
+Consideriamo\begin{center}
+$n = p * q$
+\end{center}
+Se è possibile scriver $p-1$ come un prodotto di numeri primi piccoli, allora il valore $p$ è facilmente attaccabile con l'algoritmo di Pollard. Ad esempio:
+\begin{center}
+$p-1 = 2^{101} * 3^7 * 5^{10} * 7^ {701}$
+\end{center}
+Come possiamo vedere i tali valori sono "piccoli", il valore $p$ non è adatto.
+
+\subsection*{Quadrato di Sieve}
+Il quadrato di Sieve è un algoritmo per la fattorizzazione (sieve = setaccio).
+Consideriamo \begin{center}
+$n = p * q$
+\end{center}
+Selezioniamo $k$ valori su cui applicare $mod$ $n$.
+\begin{center}
+$123456 ^2$ $\equiv x$ $mod$ $n$ 
+\end{center}
+Supponiamo che $x = 2^3*3^4*11*23^2$, continuiamo provando con $n$ valori $x_n$
+
+\begin{center}
+$n = 3837523$
+\end{center}
+Selezioniamo $k$ valori su cui applicare $mod$ $n$, più valori scegliamo , più precisa sarà la nostra stima. Ad esempio scegliamo 9398, 19095, 1964, 17078
+\begin{center}
+$9398^2 = 5^5 * 19$ $mod$ $n$\\
+$19095^2 = 2^2 * 5 * 11 * 13 * 19$ $mod$ $n$\\
+$1964^2 = 3^2 * 13^3$ $mod$ $n$\\
+$17078^2 = 2^6 * 3^2 * 11$ $mod$ $n$\\
+...
+\end{center}
+I valori a sinistra sono tutti valori al quadrato, moltiplicandoli tra di loro avremo sicuramente un valore quadrato, in particolare:
+\begin{center}
+$(9398 * 19095 * 1964 * 17078)^2$
+\end{center}
+Il valore all'interno delle parentesi lo chiamiamo $x$.
+I valori a destra invece abbiamo $n$ valori con la stessa base, progressivamente moltiplichiamo tra loro e ricaviamo:
+\begin{center}
+$2^8*3^4*5^6*11^2*13^4*19^2$
+\end{center}
+Notiamo che tutti questi valori hanno una potenza quadrata, possiamo quindi riscriverla così:
+\begin{center}
+$(2^4*3^2*5^3*11*13^2*19)^2$
+\end{center}
+Il valore all'interno delle parentesi lo chiamiamo $y$.
+\begin{center}
+$x^2 \equiv y^2$ $mod$ $n$\\
+Allora $n$ è composto e posso trovare uno dei due fattori di $n$ facendo: $x \neq \pm y\rightarrow$ $ (MCD(x-y; n) = d \neq 1$\\
+Valore che è uguale a $p$ o $q$
+\end{center}
+
+\section*{Problema del logaritmo discreto}
+
+\begin{center}
+$\alpha^x \equiv \beta$ $mod$ $p$
+\end{center}
+Come faccio a trovare $x$? La cosa più intuitiva sarebbe utilizzare il logaritmo
+\subsection*{Baby step giant step}
+Il primo approccio è quello di utilizzare il \emph{baby step giant step}\\
+Creiamo due vettori di grandezza $p$ (ovvero il modulo) in cui vengono inseriti gli elementi $\alpha_j$ nel primo vettore, $\beta\alpha^{-Nk}$ nel secondo vettore. Cerchiamo poi due valori comuni, per poi effettuare l'uguaglianza. 
+\begin{center}
+\includegraphics[scale= 0.7]{rev1}
+\end{center}
+In particolare l'uguaglianza
+\begin{center}
+$\alpha^j \equiv \beta * \alpha^{Nk}$ $mod$ $p$
+\end{center}
+E' uguale a 
+\begin{center}
+$\alpha^{j+NK} \equiv \beta$ $mod$ $p$
+\end{center}
+Ricordiamo che:
+\begin{center}
+$\alpha^x \equiv \alpha^y$ $mod$ $p$\\
+$x \equiv y$ $mod$ $p-1$\\
+$\alpha^{p-1}\equiv 1$ $mod$ $p$
+\end{center}
+
+\subsection*{analisi su parità o meno di x}
+Per dividere in 2 il sample size
+\emph{su carta}
+
+\subsection*{Index calculus}
+E' una variabile del quadratic sieve basato su \begin{itemize}
+\item un passo di precomputazione
+\item calcolo dei logaritmi 
+\item un passo di controllo proprietà, in particolare se è scomponibile
+\end{itemize}
+Consideriamo\\
+\begin{center}
+$\beta \equiv \alpha^x$ $mod$ $p$\\
+$log_\alpha \beta = x$ $mod$ $(p-1)$
+\end{center}
+Consideriamo $a^k$ così definito:
+\begin{center}
+$a^k = \Pi p_i^{a_i}$ $mod$ $p$ ove $\Pi$ è la produttoria 
+\end{center}
+Allora il passo computazionale è il seguente:
+\begin{center}
+$k = log_\alpha (\Pi p_i ^{a_i})$
+$= \sum a_i log_\alpha p_i$ $mod$ $p-1$
+\end{center}
+Questo ci permette di mettere in evidenza i logaritmi.
+Il valore $\beta$ lo moltiplichiamo per un valore $a$ elevato ad un valore $r$ random, che ci permette di espanderlo nel seguente modo:
+\begin{center}
+$\beta * \alpha ^ r = \Pi p_i^{b_i}$ $mod$ $p$\\
+$log_\alpha \beta + r log_\alpha \alpha = 
+$=$ \sum b_i log_a p_i$ $mod$ $p-1$
+\end{center}
+Possiamo esporre quello che ci serve:
+\begin{center}
+$log_\alpha \beta = -r + \sum b_i log_a p_i$ $mod$ $p-1$
+\end{center}
+Abbiamo quindi trovato $x$, dato che $x = log_\alpha \beta$. Dobbiamo scegliere un $r$ adeguato che mi generi un $p_i$ sufficientemente piccolo per garantire che l'abbia generato in precedenza
+\begin{center}
+$p = 131$ $\alpha = 2$\\
+$B = soglia = 10$ $\beta = 37$
+\end{center}
+La soglia va ad influire sui valori possibili di $p_i$ in particolare questi valori devono essere minori della soglia, definita in base alle capacità computazionali del sistema, in questo caso:
+\begin{center}
+$p_i = 2, 3, 5, 7$
+\end{center}
+\subsubsection*{Vediamo un esempio pratico}
+Impostiamo il problema:
+\begin{center}
+$\beta = \alpha ^x $ $mod$ $p$\\
+$37 = 2^x$ $mod$ $131$
+\end{center}
+Calcolo gli $\alpha^k$, tale che $alpha^k$ è scomponibile in un prodotto numeri primi minori della soglia, ovvero il passo di precomputazione $a^k = \Pi p_i^{a_i}$ $mod$ $p$ :
+\begin{center}
+$2^1 = 2$ $mod$ $131$\\
+...\\
+$2^8 = 5^3$ $mod$ $131$\\
+...\\
+$2^12 = 5*7$ $mod$ $131$\\
+...\\
+$2^14 = 3^2$ $mod$ $131$\\
+...\\
+$2^34 = 3*5^2$ $mod$ $131$\\
+...
+\end{center}
+Calcoliamo ora $k$: $k = log_\alpha (\Pi p_i ^{a_i})$.\\
+Siccome stiamo introducendo i logaritmi passiamo a $mod$ $p-1$
+\begin{center}
+$1 \equiv log_2 2$ $mod$ $130$\\
+$8 \equiv 3log_2 5$ $mod$ $130$\\
+$12 \equiv log_2 5 + log_2 7$ $mod$ $130$\\
+$14 \equiv 2log_2 3$ $mod$ $130$\\
+$34 \equiv log_2 3 + 2log_2 5$ $mod$ $130$
+\end{center}
+Possiamo procedere con l'esplicitazione dei logaritmi, se questi sono invertibili
+\begin{center}
+$log_2 2 = 1$ $mod$ $130$\\
+$log_2 5 = 5*87 = 46$ $mod$ $130$\\
+$log_2 3 = 72$ $mod$ $130$\\
+$log_2 7= 12-46 = -34 = 96$ $mod$ $130$\\
+\end{center}
+Continuiamo con $\beta * \alpha ^ r = \Pi p_i^{b_i}$ $mod$ $p$
+\begin{center}
+$37 * 2^{43} = 3 *5 * 7$ $mod$ $131$\\
+$log_2 37 + 43 log_2 2 = log_2 3 + log_2 5 + log_2 7$\\
+$log_2 37 = -43 + log_2 3 + log_2 5+ log_2 7$\\
+$ x = -r \sum b_i log_a p_i$
+\end{center}
+
+\section*{Logaritmo discreto}
 
 
 
+\subsection*{Casi d'uso del logaritmo discreto}
+
+\subsection*{Diffie Hellman}
+L'algoritmo del logaritmo discreto è utilizzato ogni giorno per lo scambio delle chiavi secondo l'algoritmo di Diffie-Hellman, che permette di scambiare le chiavi su un canale insicuro\\
+Supponiamo $\alpha, p$ due valori pubblici, e le due chiavi $x, y$ possedute da Alice e Bob, come possono scambiare le chiavi su un canale insicuro?
+\begin{center}
+\includegraphics[scale= 0.5]{dellman}
+\end{center}
+\subsubsection*{Problemi con Diffie Hellman}
+Consideriamo Alice, Bob ed un attaccante Eve. L'algoritmo di Diffie Hellman ci dice che:
+\begin{center}
+Alice spedisce $\alpha^x$ $mod$ $p$\\
+Bob spedisce $\alpha^y$ $mod$ $p$\\
+ \end{center}
+ Consideriamo Eve che riesce a fare un attacco man in the middle:
+ \begin{center}
+ Eve possiede $\alpha^z$ $mod$ $p$\\
+ Eve intercetta $\alpha^x, \alpha^y$
+ \end{center}
+ Eve procede a inoltrare il valore tampered $\alpha^z$ ad Alice e Bob, che rispettivamente svolgono:
+ \begin{center}
+ Alice: $(\alpha^z)^x$ | Bob: $(\alpha^z)^y$
+ \end{center}
+ Eve è in grado di intercettare i due valori $x$ e $y$, e ciò gli permette di leggere e contraffare tutti i messaggi.
+\begin{center}
+\includegraphics[scale= 0.5]{ld1}
+\end{center}
+
+Per raggirare questo problema è stato implementato STS, un sistema di firme digitali per garantire l'autenticità
+
+
+\subsection*{Bit commitment}
+Un'altra applicazione del logaritmo discreto è durante l'utilizzo del bit commitment, o schema di commitment. questo ci permette di mostrare il possedimento di un dato valore senza mostrarlo. E' poi possibile mostare il dato valore in futuro.
+\begin{center}
+$\alpha^x = \beta$ $mod$ $p$
+\end{center}
+
+\subsection*{ElGamal}
+E' un algoritmo di cifratura a chiave asimmetrica. Consideriamo \begin{itemize}
+\item Alice con un messaggio $m$
+\item Bob che sceglie $\alpha$ radice primitiva, $\phi$ numero primo, a numero segreto
+\end{itemize}
+Bob computa:
+\begin{center}
+$\alpha^a \equiv \beta$ $mod$ $p$\\
+Valori da pubblicare: $(\alpha, p, \beta)$
+\end{center}
+Alice per cifrare il proprio messaggio scarica le informazioni pubbliche di bob $(\alpha, p, \beta)$, genera un valore $k$ casuale segreto. A partire da $k$ calcola $r,t$, in particolare:
+\begin{center}
+$r = \alpha^k$ $mod$ $p$\\
+$t = \beta^k  * m$ $mod$ $p$
+\end{center}
+La coppia $(r,t)$ rappresenta il messaggio cifrato da spedire a Bob. Bob per decifrare effettua:
+\begin{center}
+$t * r^{-a} \equiv m$ $mod$ $p$
+\end{center}
+Stiamo incorporando il messaggio all'interno del problema del logaritmo discreto, che l'attaccante non riesce a bucare.
+\subsection*{Dimostrazione di corretta di ElGamal}
+Consideriamo: \begin{center}
+$t * r^{-a} = (\beta^k * m)(\alpha^k)^{-a}=$\\
+$= [(\alpha^a)*m^k]*(\alpha^k)^{-a} = m$ $mod$ $p$
+\end{center}
+\subsection*{Problematiche con ElGamal}
+\subsubsection*{Valore k comune}
+Consideriamo Alice con due messaggi $m_1, m_2$, cosa succede se Alice cifra due messaggi con $k$ uguale. Alice cifra:
+\begin{center}
+$(r, t_1) | (r, t_2)$
+\end{center}
+Siccome $r$  è una componente pubblica, l'attaccante può vedere senza problemi che Alice ha utilizzato un $k$ uguale per entrambi i messaggi. L'attaccante conosce $t_1, t_2$, ma non i valori a destra dell'uguale:
+\begin{center}
+$t_1 = \beta^k * m_1$ $mod$ $p$\\
+$t_2 = \beta^k * m_2$ $mod$ $p$
+\end{center}
+L'attaccante tuttavia sa che:
+\begin{center}
+$t_1/m_1 = \beta_k = t_2/m_2$
+\end{center}
+Può computare il messaggio facendo:
+\begin{center}
+$m_2 = t_2  * m_1/t_1$
+\end{center}
+
+\section*{Funzioni Hash}
+Una funzione hash è una funzione matematica/crittografica. Le principali caratteristiche delle funzione hash sono:\begin{itemize}
+\item la facilità di computazione
+\item l'input può essere una stringa di una qualsiasi dimensione
+\item l'output ha una dimensione fissa, specifica per ogni funzione hash
+\end{itemize}
+Alcuni esempi di funzioni hash sono SHA1, SHA256, MD5, SHA3 etc.
+
+\subsection*{Collision free property}
+Una funzione di hash è perfetta se è iniettiva, ovvero se $u = v$, $h(u) \neq h(v)$, più una funzione di hash sparpaglia gli elementi, meglio è. E' tuttavia possibile che due elementi abbiamo una stessa chiave, in questo caso parliamo di $collisione$. \\
+Le collisioni comportano che un output della hash function abbia 2 input medesimi. E' tuttavia possibile trovarli?
+\begin{center}
+\includegraphics[scale= 0.5]{h1}
+\end{center}
+Se vengono computati i valori hash di $2^{130}$ stringhe, la probabilità di trovare 2 valori con lo stesso output hash è del 99\%. E' tuttavia un valore cosi astronomicamente alto che è possibile considerarla nulla.\\
+Possiamo quindi considerare che le funzioni hash siano collision free (non proprio, ma non importa). Possiamo quindi considerare che:
+\begin{center}
+$H(x) = H(y) \rightarrow x = y$
+\end{center}
+
+\subsection*{Pre-image resistance}
+\begin{center}
+\includegraphics[scale= 0.5]{h2}
+\end{center}
+Consideriamo un valore hash $H(x)$, è computazionalmente impossibile ricavare $x$, ovvero la funzione non è reversibile (a partire da un valore hashato, non posso risalire alla fonte). In particolare la funzione hash è chiamata one-way. Possiamo quindi concludere che per nascondere un messaggio $x$, è possibile nasconderlo con $H(x)$
+\subsection*{Second pre-image resistance}
+\begin{center}
+\includegraphics[scale= 0.5]{h3}
+\end{center}
+Dato un valore $x$, è computazionalmente impossibile trovare un valore $y$ tale che $H(x) = H(y)$.
+
+\subsection*{SHA1}
+SHA1 è una funzione hash crittografica che produce hash values di lunghezza 160. SHA1 lavora svolgendo 80 round della seguente funzione:
+\begin{center}
+\includegraphics[scale= 0.5]{sh1}\\
+\emph{Ogni 20 round la funzione $f$ ed il valore $k$ cambiano}
+\end{center}
+
+\begin{itemize}
+\item I blocchi A, B, C, D sono blocchi di 32 bit\\
+In particolare i blocchi A, B, C, D sono inizializzati con valori in big endian con valore esadecimale in ordine crescente:
+\begin{center}
+\includegraphics[scale= 0.5]{blocks}
+\end{center}
+I valori costanti presenti nei blocchi cambiano dal passo $n_2$ in poi. Dopo 80 round di SHA1, questo output è utilizzato come valore costante iniziale per i blocchi successivi
+\item $F$ è una funzione lineare
+\item $<<<$ rappresenta una funzione di shift, rispettivamente di 5 e 30 posizioni
+\item $W_t$ rappresenta il plaintext del round $t$, di grandezza 512 bit.\\
+Consideriamo un messaggio $m$ (la divina commedia) di lunghezza $n$ ($n$ lunghezza arbitraria), il messaggio $m$ è diviso in $k$ blocchi di grandezza 512, questi 512 bit sono divisi in blocchi $W_j$ da 32 bit ciascuno.\\ In particolare se il messaggio è lungo 512 bit, questo ci produrrà 16 blocchi che rappresentano rispettivamente un valore di $W_j$ da 32 bit $(16*32 = 512)$.\\
+\emph{Ma io ho bisogno di fare 79 rounds, e ne ho solo 16, cosa faccio?}
+\begin{center}
+\includegraphics[scale= 0.5]{blocks2}
+\end{center}
+Dal round 16 in poi, quindi, vengono presi 3 blocchi, e $XOR$ati tra di loro, per poi effettuare un $leftrotate$
+\item $K_t$ è una costante, valore che dipende dal numero di round in cui ci troviamo
+\begin{center}
+\includegraphics[scale= 0.5]{blocks3}
+\end{center}
+\item Infine svogliamo una semplice somma per rendere SHA1 immune ad attacchi semplici:
+\begin{center}
+\includegraphics[scale= 0.5]{blocks4}
+\end{center}
+\end{itemize}
+
+\subsection*{SHA1 | password hashing}
+Consideriamo di voler hashare una password, queste essendo solitamente corte potremmo trovarci in una situazione in cui non riusciamo a riempire neanche il primo blocco $W_k$:
+\begin{center}
+\includegraphics[scale= 0.5]{blocks5}
+\end{center}
+Utilizziamo quindi un padding, in particolare vengono aggiunti un bit di $1$ ed $n$ bit $0$, in particolare $n$ fino al 448 bit. Nei rimanenti 64 bit inseriamo:
+\begin{center}
+\includegraphics[scale= 0.5]{blocks6}
+\end{center}
+In particolare il 5to ed il 4to bit da destra vengono settati ad 1 in quando la lunghezza della parola Andrea è $48 bit = 32 + 16 = 2^5 + 2^4$, ed i rimanenti bit sono settati a 0, fino a 64.
+\begin{center}
+\includegraphics[scale= 0.5]{blocks7}
+\end{center}
+
+\subsection*{Attacco a SHA1 | SHAttered: first public collision}
+On 23 February 2017, the CWI (Centrum Wiskunde \& Informatica) and Google announced the SHAttered attack, in which they generated two different PDF files with the same SHA-1 hash in roughly $2^{63.1}$ SHA-1 evaluations. This attack is about $100,000$ times faster than brute forcing a SHA-1 collision with a birthday attack, which was estimated to take $2^{80}$ SHA-1 evaluations. The attack required "the equivalent processing power of 6,500 years of single-CPU computations and 110 years of single-GPU computations"
+
+\subsection*{Attacchi a funzioni hash}
+\subsubsection*{Paradosso del compleanno}
+Utilizzato per attaccare le funzioni hash e le firme digitali, il paradosso afferma che la probabilità che almeno due persone in un gruppo compiano gli anni lo stesso giorno è largamente superiore a quanto potrebbe dire l'intuito: infatti già in un gruppo di 23 persone la probabilità è circa 0,51 (51\%); con 30 persone essa supera 0,70 (70\%), con 50 persone tocca addirittura 0,97 (97\%). \\
+Calcoliamo la probabilità secondo la quale 23 non compiano gli anni lo stesso giorno:
+\begin{center}
+$PND = (1 - 1/365) * (1-2/365)*$ $...$ $(1-22/365)$
+\end{center}
+Se ora calcoliamo \begin{center}
+$1-PND$
+\end{center}
+Possiamo calcolare la probabilità di collisione.\\\\
+Se PND è $0,493$ allora $1 - PND = 0,507$, ovvero c'è una probabilità del 50\% che due persone abbiamo lo stesso compleanno. In particolare la probabilità è 70\% per 30 persone, 89\% per 40 persone. La probabilità della collisione è approssimabile con \begin{center}
+$1 - e^{-r^2/2N}$\\
+ove $N =$ dimensione del campione $(365)$\\
+e $r$ = dimensione scelta $(23, 30, 40)$
+\end{center}
+Un altro esempio applicabile è l'analisi delle targhe delle automobili, quant'è il numero di macchine che dobbiamo esaminare perché due abbiano la porzione delle cifre uguale?
+\subsubsection*{Consideriamo con le funzioni hash}
+N= è il nostro digest\\
+r = numero di hash che dobbiamo calcolare per trovare una collisione\\
+Questo tuttavia non ci permette di attaccare SHA1, in quanto gli hash che calcoliamo noi sono randomici. Per attaccare SHA1 effettuiamo un attacco simile a baby step giant step, calcolando
+\begin{center}
+$P = 1 - e^-\lambda$\\
+$\lambda = r^2/N$
+\end{center}
+
+\section*{Firma digitale}
+Consideriamo un contratto con messaggio $m$, effettuiamo:
+\begin{center}
+$m \rightarrow hash(m) \rightarrow$ $Firma RSA(hash(m))$
+\end{center}
+Il crittografo in questo caso deve difendersi sia dall'attacco a $hash(m)$ che da attacchi a $Firma RSA(hash(m))$. Andiamo quindi a firmare $l'hash(m)$ con RSA, consideriamo:
+\begin{center}
+Public: $(n,e)$\\
+Private: $(p, q, d)$
+\end{center}
+E procedura di encryption $m^e = c$, e procedura di decryption $c^d = m$, andiamo ad applicare una variante. Consideriamo che $d$ è la chiave privata, posseduta solo dal proprietario.\\
+Consideriamo procedura di encryption $m^d = c$ e procedura di decryption $c^e = m$.
+\begin{center}
+$m \rightarrow hash(m) = h$\\
+$h^d \rightarrow$ firma
+\end{center}
+\subsection*{MSG recovery schemes RSA | Signatures with appendix El Gamal}
+\emph{TBD to be completed}
+\begin{center}
+$El-Gamal: m, sig (h(m))$\\
+\end{center}
+
+\section*{Funzioni "zero-knowledge"}
+It is common practice to label the two parties in a zero-knowledge proof as Peggy (the prover of the statement) and Victor (the verifier of the statement).\\
+\begin{center}
+\includegraphics[scale= 0.3]{0k}
+\end{center}
+In this story, Peggy has uncovered the secret word used to open a magic door in a cave. The cave is shaped like a ring, with the entrance on one side and the magic door blocking the opposite side. Victor wants to know whether Peggy knows the secret word; but Peggy, being a very private person, does not want to reveal her knowledge (the secret word) to Victor or to reveal the fact of her knowledge to the world in general.\\
+
+They label the left and right paths from the entrance A and B. First, Victor waits outside the cave as Peggy goes in. Peggy takes either path A or B; Victor is not allowed to see which path she takes. Then, Victor enters the cave and shouts the name of the path he wants her to use to return, either A or B, chosen at random. Providing she really does know the magic word, this is easy: she opens the door, if necessary, and returns along the desired path.\\
+\begin{center}
+\includegraphics[scale= 0.3]{1k}
+\end{center}
+
+However, suppose she did not know the word. Then, she would only be able to return by the named path if Victor were to give the name of the same path by which she had entered. Since Victor would choose A or B at random, she would have a 50\% chance of guessing correctly. If they were to repeat this trick many times, say 20 times in a row, her chance of successfully anticipating all of Victor's requests would become vanishingly small (1 in 220, or very roughly 1 in a million).\\
+Thus, if Peggy repeatedly appears at the exit Victor names, he can conclude that it is extremely probable that Peggy does, in fact, know the secret word.
+
+\section*{Block-chaining}
+\emph{$https://www.finriskalert.it/wp-content/uploads/visconti.pdf$}
+
+\subsection*{Merkle-Tree}
+Consideriamo una serie di transazioni, da 1 a 8, calcoliamo i loro hash, e li raggruppiamo a 2 a 2.
+\begin{center}
+\includegraphics[scale= 0.3]{2k}
+\end{center}
+I dati dei due puntatori hash vengono combinati, e utilizzati per calcolare un nuovo puntatore hash, interando progressivamente arriviamo prima o poi a una radice.
+\begin{center}
+\includegraphics[scale= 0.3]{3k}
+\end{center}
+Questo albero è chiamato un Merkle tree. Il Merkle Tree permette di verificare una potenziale manomissione, se per esempio un attaccante modifica una transazione, o un nodo intermedio, il valore della radice cambia.
+\begin{center}
+\includegraphics[scale= 0.3]{4k}
+\end{center}
+Un'altra proprietà del Merkel Tree è che ci permette di verificare l'appartenenza. Se vogliamo per esempio verificare pubblicamente che una transazione sia presente all'interno di un albero, conoscendo solo la radice, mostriamo i nodi dalla radice alla transazione.
+\begin{center}
+\includegraphics[scale= 0.3]{5k}
+\end{center}
+Questo ci permette di mostrare l'appartenenza all'albero, senza mostrare il valore della transazione.
+Per effettivamente mostrare la proprietà di una transazione viene utilizzata la firma digitale.
+
+\section*{Protocolli}
+
+\section*{Curve elittiche}
 
 \end{document}  
