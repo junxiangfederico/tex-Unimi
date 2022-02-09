@@ -27,7 +27,7 @@
 A buffer overflow is a bug that affects low-level code, normally a program would crash but an attacker can alter the situation \emph{to steal informations, corrupt valuable information or run an attacker's code of choice.}\\
 They are relevant because C and C++ are still popular, and buffer overflow attacks stil happen regularly.
 They have a long history and there are many approaches to defend against them.\\
-There levels in which we can act to defend against them, the compiler, the OS, or the architecture.
+The levels in which we can act to defend against them, the compiler, the OS, or the architecture.
 \subsection*{Memory Layout (32bit, Linux)}
 In pile in a 32 bit system, Linux or Intel 32-bit the addresses range from 0x00000000 to 0xBFFFFFFF.\\
 The stack, which grows downwards, is the place in which activation records are stored, together with the heap they are created in runtime. The heap is managed with malloc, calloc, free and grows upwards, and contains variables. The text segment contains the instructions.
@@ -56,13 +56,13 @@ How do we build the injection vector?
 {\footnotesize Note that the "disallocation" only consists in a subtraction of the reference pointer, the data remains\\
 We introduce arbitrary shellcode, and by hijacking the return address we can execute code we want}\\
 We can only load machine code into memory, which are instructions already compiled and ready to run, since we're trying to give the attacker general access to the system, the best candidate is the general-purpose shell. \\The shellcode is carefully crafted in the format \emph{[SHELLCODE][ADDRESSBUF] = Attack Vector} and it is copied with the function call "strcpy".
-It is fundamental we get to know the [ADDRESSBUF], since if we don't an unrecognized instruction is going to run and C is gonna throw an IllegaArgumentException.\\
-{\footnotesize Shellcode: machine code -that we want to execute- to run a shell}\\
+It is fundamental we get to know the [ADDRESSBUF], since if we don't an unrecognised instruction is going to run and C is gonna throw an IllegaArgumentException.\\
+{\footnotesize Shellcode: machine code-that we want to execute-to run a shell}\\
 The idea: we can't insert a "jump to my code" instruction, so we hijack the saved \%eip. Since we don't know the desired \%eip address we'll have to:\begin{itemize}
 \item Try a lot of different values, upwards of $2^{32}$ possible answers\\
-\item Without address randomization, the stack always start from a fixed address, and it doesn't grow very deeply.
+\item Without address randomisation, the stack always start from a fixed address, and it doesn't grow very deeply.
 \end{itemize}
-How do we increase the chances to execute our shellcodes ?\\
+How do we increase the chances to execute our shell-codes ?\\
 Introduce the NOPSLED: 0x90 is a NOP instruction, single byte instruction which does nothing.
 We can fill our vector buffer of NOP operations, thus increasing the chances of execution
 \begin{figure}
@@ -81,11 +81,11 @@ The computer by itself has protections, mainly towards the \textbf{returnAddress
 Let's take an overlook over the differences between the Stack and the Heap:
 \begin{itemize}
 \item The stack:\\
-- has a fixed memory allocation, which is only known at compile time.\\
-- inside it reside local variables, return addresses, functions args.\\
-- it's very fast and automatic, and it is managed by the compiler.
+- has a fixed memory allocation, which is only known at compile time\\
+- inside it reside local variables, return addresses, functions args\\
+- it's very fast and automatic, and it is managed by the compiler
 \item The Heap:\\
-- has dynamic memory allocation, known at runtime.\\
+- has dynamic memory allocation, known at runtime\\
 - inside it reside objects, big buffers, structs, persistence and larger objects\\
 - it's slower, manual, managed by the programme
 \end{itemize}
@@ -98,7 +98,7 @@ Let's see an overview of a heap chunk:
 \begin{center}
 \includegraphics[scale = 0.6]{heap2}
 \end{center}
-The chunk is a part of the memory allocated in the heap. Alongside the data, it also contains metadatas:
+The chunk is a part of the memory allocated in the heap. Alongside the data, it also contains metadata:
 \begin{itemize}
 \item prev\textunderscore size: contains the size of the pervious chunk 
 \item size: it is also equipped with a bit-switch \emph{PREV\textunderscore INUSE}.
@@ -125,14 +125,14 @@ When we deallocate a chunk, we use an unlink function, this leaves an opening fo
 Unfortunately this technique no longer works, the current unlink function verifies beforehand the values
 We can however look for other flaws:
 
-\subsection*{House of Force vulnerabity}
+\subsection*{House of Force vulnerability}
 Conditions:
 \begin{itemize}
 \item It requires 3 malloc, more precisely a malloc that allows us to overwrite the top chunk, one malloc with a user controllable size and another call to malloc.
 \item 1 (or 2) strcpy
 \end{itemize}
 \subsection*{Use after free vulnerability}
-Use after free vulnerability are vulnerabilities that happen when a  pointer to an object that hash been freed is deferenced. This can lead to information leakage, and furthermore the attacker could also modify unintended memory locations that can potentially lead to code execution.\\
+Use after free vulnerability are vulnerabilities that happen when a pointer to an object that has been freed is deferenced. This can lead to information leakage, and furthermore the attacker could also modify unintended memory locations that can potentially lead to code execution.\\
 A prime candidate for an attack is a dangling pointer. Dangling pointer happen when a pointer, which was previously the target of another pointer is deleted, leaving the other pointer dangling.\\
 \begin{center}
 \includegraphics[scale = 0.6]{dpointer}
@@ -191,7 +191,7 @@ Pointers are viewed as triples $(p, b, e)$ where:
 \begin{itemize}
 \item $p$ is the actual pointer
 \item $b$ is the base of the memory region it may access
-\item $e$is the extend (or the bounds) of the region
+\item $e$is the extent (or the bounds) of the region
 \end{itemize}
 The deferenced access shall be allowed iff $ b \leq p \leq e - sizeof(typeof(p))$. \\ An implementation of a spatial safety compliant memcpy:
 \begin{center}
@@ -293,7 +293,7 @@ To use this attack, system is called. System is a function that has argument a t
 \begin{center}
 \includegraphics[scale = 0.5]{libc}
 \end{center}
-Defence strategies mitigated the \emph{return-to-libc attack} by introducing \emph{Address-space Layout Randomitazion or ASLR} which places standard libraries and other elements in memory in random places, making them harder to guess. It also has some caveats:
+Defence strategies mitigated the \emph{return-to-libc attack} by introducing \emph{Address-space Layout Randomization or ASLR} which places standard libraries and other elements in memory in random places, making them harder to guess. It also has some caveats:
 \begin{itemize}
 \item Only shifts the offset of memory areas, not particular locations within those areas
 \item May not apply to program code, but only libraries
@@ -302,7 +302,7 @@ this makes this technique more promising on 64-bit systems
 \end{itemize}
 When we talk about \emph{cat and mouse} we mean the game of cat and mouse being played by attackers and the defence specialists.
 \begin{center}
-\includegraphics[scale = 0.5]{catmouse}
+\includegraphics[scale = 0.4]{catmouse}
 \end{center}
 
 \section*{Return oriented Programming}
@@ -336,7 +336,7 @@ In CISC there is a degree of variability in the length of instruction (which is 
 \begin{subfigure}[H]{0.4\linewidth}
 \includegraphics[width=\linewidth]{b1}
 \end{subfigure}
-\begin{subfigure}[H]{0.7\linewidth}
+\begin{subfigure}[H]{0.5\linewidth}
 \includegraphics[width=\linewidth]{b2}
 \end{subfigure}%
 \end{figure}
@@ -564,7 +564,7 @@ Each time a branch path is encountered, the expression is saved inside a \emph{s
 Concolic execution makes it really easy to concretise inputs, by replacing symbolic variables with concrete values that satisfy the path condition.
 
 \section*{Search and SMT}
-Symbolic execution is appealingly simple and useful, but it's computationally expensive. Let's see how the effective use of symbolic execution boils down to a kind of search, and take a moment to see how its feasibility at all has been aided by the rise of SMT solvers. Basically the practical use of symbolic executiong boils down to \begin{itemize}
+Symbolic execution is appealingly simple and useful, but it's computationally expensive. Let's see how the effective use of symbolic execution boils down to a kind of search, and take a moment to see how its feasibility at all has been aided by the rise of SMT solvers. Basically the practical use of symbolic execution boils down to \begin{itemize}
 \item searching for the paths
 \item solving the symbolic execution for these paths using SMT solvers while accounting for feasibility
 \end{itemize}
@@ -578,15 +578,15 @@ And loops are even worse
 \includegraphics[scale = 0.4]{pc2}\\
 \emph{potentially $2^{31}$ paths}
 \end{center}
-Concolic executiong, as opposed to static analysis, doesn't terminate before considering all possible program runs. Static execution approximates multiple loop executions, assuming all branches or a number of loop iterations are feasible; this however can lead to false alarms. Concolic execution of the other hand aims to be more precise, granting more completeness.
+Concolic execution, as opposed to static analysis, doesn't terminate before considering all possible program runs. Static execution approximates multiple loop executions, assuming all branches or a number of loop iterations are feasible; this however can lead to false alarms. Concolic execution of the other hand aims to be more precise, granting more completeness.
 \subsection*{Basic symbolic execution}
 \emph{So how do we actually look for the possible paths?}\\
-Simply, using seach algorithms, in particular
+Simply, using search algorithms, in particular
 \begin{itemize}
-\item Depth-first search (DFS) using a stack as worklist
-\item Breadth-first seach (BFS) using a queue as worklist
+\item Depth-first search (DFS) using a stack as work-list
+\item Breadth-first search (BFS) using a queue as work-list
 \end{itemize}
-Potential drawbacks to this approach are that searches cannot be guided by any higher level knowledge (getting stucks in loops, path explosion etc.), moreover \emph{DFS} can easily get stuck in parts of programs, making \emph{BFS} the better choice between the two.
+Potential drawbacks to this approach are that searches cannot be guided by any higher level knowledge (getting stuck in loops, path explosion etc.), moreover \emph{DFS} can easily get stuck in parts of programs, making \emph{BFS} the better choice between the two.
 
 \subsection*{Advanced symbolic execution}
 As we have seen DFS and BFS are not optimal solutions, let's focus on prioritising searches, trying to steer searching towards paths more likely to contain assertions failures, and imposing a time limit on execution.\\
@@ -625,7 +625,7 @@ Generational search is a hybrid of BFS and coverage-guided, this technique aims 
 Generational search also uses coverage heuristic to pick priority
 
 \subsection*{Combined search}
-Combined search aims to run multiple searches with different techniques at the same time alternating between them, it aims to increase parallelisation. The logic is since no-one-size-fits-alll solution, we switch between search techniques based on the occasion, selecting occasionally the algorithm.
+Combined search aims to run multiple searches with different techniques at the same time alternating between them, it aims to increase parallelisation. The logic is since no-one-size-fits-all solution, we switch between search techniques based on the occasion, selecting occasionally the algorithm.
 
 \section*{SMT solvers}
 SMT solvers are the tools we use to solve SATs.\\
@@ -648,11 +648,140 @@ The SMT solver then outputs a model which can be further developed, or the expre
 Other SMT solvers are Yices by SRI, STP by Vijay Ganesh, CVC3 by NYU
 \subsubsection*{A bit of history}
 \begin{itemize}
-\item SAGE is a concolic executor developed at Microsoft Research which primarly targets bugs in file parsers (JPEG, DOCX, PPT etc.), uses generational search. SAGE is used on production software at MS (500 machines years, 3.4+ billion constrains, 100s of apps, 100s of bugs)
+\item SAGE is a concolic executor developed at Microsoft Research which primarily targets bugs in file parsers (JPEG, DOCX, PPT etc.), uses generational search. SAGE is used on production software at MS (500 machines years, 3.4+ billion constrains, 100s of apps, 100s of bugs)
 \item KLEE is a symbolic executor for LLVM bitcode, uses $fork()$ to manage multiple states, uses a variety of search strategies, mainly random path + coverage guided
 \item Mayhem runs on binaries, uses BFS search and native execution, combines best of symbolic and concolic strategies, and automatically generates exploits when bugs are found
-\item Mergepoint extends Mayhen with a technique called veritesting, combining symbolic execution with static analysis. It provides a better balance of time between olver and executor, finding more bugs, and covers more of the program
+\item Mergepoint extends Mayhen with a technique called veritesting, combining symbolic execution with static analysis. It provides a better balance of time between solver and executor, finding more bugs, and covers more of the program
 \end{itemize}
+
+\section*{Fuzzing techniques}
+Fuzzing is an alternative to symbolic execution, it's a kind of random testing, its goal is to make sure certain bad things don't happen no matter. Fuzzing is a process which aims to clear the program of crashes, thrown exceptions and non terminations.\\
+
+Fuzzing is not employed on its own but it complements functional testing, normal tests can be a starting point for fuzz tests, which can then be followed up with direct tests.
+Fuzzing must be efficient, 
+\subsection*{Fuzzing techniques}
+There are 3 main types of fuzzing:
+\begin{itemize}
+\item black box fuzzing\\
+the tool knows nothing about the program or its input, it's \emph{easy to use} and get started, but will explore only shallow states unless it gets lucky since it relies on randomly generated inputs
+\item grammar based fuzzing\\
+the tool generates input formed by specified grammar, it's \emph{more work to use}, to produce the grammar, but can go deeper in the state space. 
+\item white box fuzzing\\
+the tool generates inputs partially informed by the code of the program being fuzzed, it's \emph{easy to use}, but computationally expensive due to the analysis that has to be done beforehand
+\end{itemize}
+
+\subsection*{Fuzzing inputs generation}
+We have seeing the types of fuzzing techniques, but how are inputs actually generated?
+\begin{itemize}
+\item Mutation\\
+we take a legal input and mutate it, and using that as input. Legal inputs may be human produced, for example from a grammar or SMT solver query
+\item Generational\\
+we generate input from scratch, for example from a grammar
+\item Combinations\\
+we generate initial inputs and mutate them $n$ times to generate new inputs, or we generate mutations according to a grammar
+\end{itemize}
+There are many ways to generate input and the technique used need not be only one, we can combine together. Fuzzing is different from symbolic execution since it generate inputs without taking code structure into account (there is no logic regarding $if, else, switch$ structures)
+ \subsubsection*{But what happens when the program actually crashes?}
+ When a crash actually occurs we look for the root cause, and ways to potentially fix them. More explicitly we ask
+ \begin{itemize}
+ \item is there a way to make the input smaller, and more understandable?
+ \item are two or more crashes signalling the same bug, if yes we can correlate them together (vulnerabilities cluster)
+ \end{itemize}
+ After identifying the root cause we can analyse the crash looking for exploitable vulnerabilities, for example dereferencing $NULLs$ is rarely exploitable, and buffer overruns are often positioned in a different place than the crash. 
+ 
+ \subsection*{Memory errors}
+ One of the other aims of fuzzing is looking for memory errors. One of the ways we do this is by compiling the program with an \emph{Address Sanitiser or ASAN}, an instrument that accesses arrays to check for overflows and use after free errors. \\
+ After running \emph{ASAN} we continue by fuzzing it, we analyse is the program crashed with an ASAN signalled error, and if that's the case we worry about exploitability.
+ 
+\subsection*{Symbolic execution vs Fuzzing}
+\begin{center}
+\includegraphics[scale = 0.4]{sf}
+\end{center}
+In this example we see that symbolic execution clearly wins, since during white-box fuzzing we keep a track of conditions, generating from the is way simpler, in particular in this example the possibility to generate an input that triggers the error is abysmal. \\
+To give a sense of the order of magnitudes, white-box fuzzing, as a recent paper as shown, such as \emph{KLEE} is 3000 times slower than native execution, while \emph{angr} is 300,000 times slower. Given these numbers, achieving 100\% is virtually impossible.
+
+
+\section*{Meltdown \&Spectre}
+Meltdown e Spectre sono due attacchi che sfruttano vulnerabilità nei moderni processori, che permettono ad un attaccante di rubare informazioni sensibili su un computer.\\
+Normalmente I processori non sono in grado di leggere informazioni in utilizzo da altri processi, tuttavia con Meltdown e Spectre un attaccante è in grado di accedere a tali informazioni.
+
+\subsection*{Meltdown}
+Meltdown è un attacco che rompe la divisione tra applicazioni utente e sistema operazioni, permette ad un programma di accede alla memoria, esponendo informazioni sensibili. 
+
+Meltdown permette di leggere un byte in in una qualunque zona di memoria mappata dal processo dell'attaccante, più in particolare viene attaccato il kernel che di norma non dovrebbe essere accessibile, ma è sempre mappata nei processi per motivi di performance.\\
+Meltdown è una vulnerabilità hardware, per mitigare il problema bisogna modificare il kernel perché non vengano più mappati dati sensibili, che tuttavia ha un costo pesanti in termini di performance.
+Vediamo il funzionamento:
+\begin{itemize}
+\item Un processo attaccante svuota la cache e prepara il branch predictor perché sbagli
+\item Il processore, per velocizzare le operazioni svolge una \textbf{branch prediction}, assume che l'if sia true, ed esegue una \textbf{speculative execution} dell'istruzione successiva, caricando il valore in CPU cache.\\
+Se l'if, come impostato dall'attaccante risulta false, la CPU dovrebbe annullare la speculative execution e cancellare il valore dell'istruzione successiva (attraverso la flush); tuttavia questo non avviene, ed il valore risulta ancora presente in cache
+\item L'attaccante svolge un \textbf{time-based} attack per guessare i valori
+\end{itemize}
+\begin{center}
+\includegraphics[scale = 0.8]{meltdown}
+\end{center}
+Siccome la prediction fallisce, ma la CPU "per portarsi avanti" ha già caricato il valore \emph{secret}, che può essere utilizzato per fare un timings attack.
+
+
+
+\subsection*{Spectre}
+Spectre è un attacco che permette di rompere la divisione tra diverse applicazioni, permettendo all'attaccante di "leakare" informazioni segrete.
+Spectre permette di leggere byte e può essere usato in concomitanza con meltdown, o su altri processi. Perché Spectre possa essere attuato deve esistere un accesso in memoria fatto attraverso un dato influenzabile dall'attaccante (nell'esempio del prof $array_2[array_1[x] * 4096]$ dove $X$ può essere controllato, o almeno influenzato dall'attaccante) che possa essere eseguito in caso di branch prediction scorretta
+
+
+
+\section*{Attacks}
+\subsection*{Cache attack (side-channel attacks)}
+Recuperare mezz'ora
+\begin{center}
+\includegraphics[scale = 0.4]{at}
+\end{center}
+
+\begin{itemize}
+\item Spiega Spectre/Meltdown:\\
+Meltdown e Spectre sono due attacchi che permettono di rompere la divisione tra applicazioni utente e sistema operativo, permettendo ad un attaccante di accedere a porzioni di memoria a cui non dovrebbe avere accesso, esponendo informazioni sensibili.\\
+I meccanismi che entrano in gioco sono le branch prediction, speculative execution e i timings attack. La branch prediction è un meccanismo svolto dal processore per velocizzare l'esecuzione, ogni qualvolta viene incontrata una branch (ad esempio if), il processore esegue una prediction (true or false), e svolge una speculative execution sulla istruzione successiva. Se l'if è effettivamente presa, la speculative execution è commitata, altrimenti è discardata con un flush. 
+Il problema è che l'operazione di flushing non è perfetta, l'operazione dovrebbe cancellare tutte le informazioni della speculative execution, tuttavia questi risultano comunque raggiungibili dalla CPU cache. Un attaccante può quindi svolgere un timings attack per guessare i valori.
+Meltdown colpisce praticamente tutti i processori, Spectre è un exploit che permette di rompere le divsioni tra diverse applicazioni, e se usato in concomitanza con Meltdown permette ad applicazioni di leakare informazioni sensibili di altre applicazioni.
+\item Cos'è Qsym e Z3?
+Z3 SAT/SMT è un SMT/SAT solver sviluppato da Microsoft. Un SAT è un'applicazione che risolve espressioni booleane, mentre un SMT solver trasforma una formula non booleana in booleana. 
+Gli SMT solvers sono tools utilizzati per risolvere SATs, SATs si occupano di trasformare formule proposizionali in formule composte da variabili booleane connesse da operatori booleani.
+\item Elenca le condizioni di House of Force\\
+House of Force è un attacco heap overflow, che sfrutta una vulnerabilità del topchunk. Perché l'attacco sia attuabile abbiamo bisogno di 3 malloc, in particolare: una malloc che ci permette di sovrascrivere il top chunk, una malloc che permetta all'attaccante di specificare un size, un'altra malloc call, un buffer overflow, ed infine 1 o 2 strcpy.
+\item Come fa blind rop a sconfiggere l'ASLR?\\
+L'ASLR o address space layour randomization è un meccanismo di difesa che protegge da attacchi di tipo buffer overflow, posizionando i maniera randomica gli eseguibili di sistema, nella memoria. Questo funziona perché l'attaccante non sarà in grado di identificare l'indirizzo su cui agganciarsi per eseguire gli exploits. Blind ROP è un meccanismo di attacco basato su Gadgets.
+I gadgets sono una serie di istruzioni che terminano con ret, che svolgono una data funzione. Attraverso un attacco Blind ROP cercihamo abbastanza gadget per sollevare la funzione write che ci permette di dumpare la memoria. Questo funziona perché attarverso un attacco Blind ROP non abbiamo bisogno di conoscere l'indirizzo, del nostor buffer, ma solo l'indirizzo in cui risiedono i gadgets, la cui posizione è statica, e non cambia mai.
+\item Come funziona CFI, come sceglie le etichette?\\
+CFI, o contorl flow integrity, è un meccanismo di difesa che osserva il comportamento di un programma e se il comportamento devia da quello aspettato, lo ferma.
+Per fare ciò abbiamo quindi bisogno di definire un comportamento aspettato, avere un detector in grado di riilevare eventuali deviazioni, e meccanismi di verifica e di difesa per il detector.
+Il detector quindi deve avere un grado di randomicità e sicurezza. Per definire il comportamento aspettato utilizziamo contorl flow graphs, o CFG, attraverso questi possiamo rappresentare le possibili combinazioni di chiamate ad altre funzioni. Il codice è suddivos in blocchi, e le chiamate sono suddivise dalle returns. Dobbiamo controllare solo le chiamate indirette, come le jmp, calls e ret in quando le chiamate dirette hanno indirizzo fisso, che non può mai essere modificato.
+IRM o In-line reference monitor è utilizzato per estendere le CFG, introducendo delle labels. Le labels sono inserite prima del target address di una indirect calls, e nel codice è inserito un controllo per verificare la congruenza della label, che se non è valida, viene abortita.
+\item CFI può bloccare ROP? Argomentare con esempi concreti?
+CFI è in grado di bloccare ROP, in particolare utilizzando IRM o in line reference monitor possiamo estendere le CFG e introdurre delle labels. Le labels sono controllate al momento della function calls e function returns, e se queste non coincdono l'esecuzione è abortita. Se un attaccante cerca quindi di chiamare delle system functions, la IRM è in grado di rilevarlo e abortire.
+\item Limiti della type safety, dare un esempio dove la type safety è più forte della memory safety\\
+La type safety è un principio che se implementato, rende resiliente un programma ad attacchi di tipo buffer overflow e altri attacchi sulla memoria. La type safety è implementata con Garbage collection, che ci protegge da temporal violations, array bounds checking, che ci protegge da spatial violations e hiding represantations, che ci protegge da casting non consentiti, pointer arithmetic. Questi meccanismi, se implementati, sono tuttavia fortemenete gravosi sulla performance di un programma, in C quindi implementiamo dei meccanismi che cercano di avvicinarci alla type safety, sfruttando check for violantions, controlli effettuati su codice che risultano nella temrinazione dell'esecuzione (ad esempio implementando arrayboundsexception), non lasciando mai dangling pointers, e obbliggando gli oggetti a svolgere solo operazioni a lro consentite.
+Un esempio di codice memory safe, ma non type safe è il seguente:
+\begin{center}
+\includegraphics[scale = 0.6]{fmdas}
+\end{center}
+Un qualsiasi programma che fa casting tra due tipi con la stessa dimensione, e poi viene svolta un'operazione su di essa.
+\item  Differenza tra SAT Solver e SMT Solver, descrivere come comunicano
+SMT solver sono gli strumenti utilizzati per risolvere i SATs. Un SAT problem è un problema di traduzione da formule proposizionali composte da variaibli booleane, connesse da operatori booleani. Se una formula è soddisfacibili, ovveor esiste una assegnazione alle variabili che restituisce un valore vero, la formula si dice satisfiable, senò si dice che è unsat. 
+Ci sono vai SAT/SMT solver, che funzionano tutti in maniera un pò diversa, in particolare possiamo vedere Z3, il SAT/SMT solver di microsoft.\\
+L'SMT Solver è compsoto da due componenti, un instantiation module che inoltra un'istanza all'SMT solver. Il modulo theory reasoner dell'SMT solver genera un'espressione booleana testata dal SAT solver, fino a quando non vi sono più conflict causes. Una volta generato un modello accettabile, è inoltrato nuovamente all'istantion module per svilupparlo ulteriormente, oppure è considerato unsat, oppure viene selezionato come modello.
+\item La spatial safety è un
+\item Cosa deve avere un programma per essere vulnerabile a spectre?
+Un programma deve avere dati sensibili che determinano una branch nel codice, in modo da essere rivelabili nella branch prediction. In particolare la CPU deve implementare le branch prediction, e svolgere delle symbolic executions. Inoltre un if con accesso ad un buffer
+\item Cosa è QSYM e come mai è migliore dei competitor?\\
+QSYM è un hybrid fuzzer, è meglio dei competitor perché è più veloce, in quanto una serie di feature superflue sono state rimosse, come l'intermediate representation (IR) (codice arricchito che permette di introdurre variabili simboliche, convertibili), snapshot, modellizzazione dell'ambiente esterno, e overcontrasints utilizzando la concolic execution
+\item Spiegare randomness, coverage guidance heuristic, generational search\\
+Sono tre modalità di generazione per la ricerca di nuovi grafi di esplorazione. \\
+Randomness inizia scegliendo un path concreto, ed eseguendo una symbolic execution, per poi generare un'espressione $n$ volte. Il prossimo path è scelto in maniera uniforme, ma randomica, randomicamente riiniziamo la ricerca se nessun bug è trovato dopo un pò, e scegliamo in maniera randomica equalmente i prossimi path. \\
+Coverage guidance heuristic è un altra modalità di generazione, viene mantenuto uno score system e in base a questi scegliamo i prossimo path da esplorare. Generational search invece è un ibrido tra BFS e coverage-guided, vengono create più generation, e ogni generation espando sul lavoro svolto da quello precedente, scegliendo un path diverso in una branch.
+\end{itemize}
+
+
+
 
 \end{document}  
 
