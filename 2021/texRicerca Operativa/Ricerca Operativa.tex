@@ -115,7 +115,7 @@ Se l'inammissibilità rispetto ad un vincolo violato è stata minimizzata, ma il
 \section{Analisi post-ottimale}
 Dopo aver calcolato la soluzione ottima di un problema, è importante valutare la robustezza dei dati (per tenere conto di incertezze, approssimazioni, arrotondamenti)
 \subsection{Analisi di sensitività}
-Utilizzata per valutare l'intervallo nel quale può variare ogni coefficiente $c_j$ e $b_i$ senza che cambi la base ottima. In particolare vengono considerate le condizioni di ammissibilità (che dipendono solo da $b4) e ottimalità (che dipendono solo da $c$.
+Utilizzata per valutare l'intervallo nel quale può variare ogni coefficiente $c_j$ e $b_i$ senza che cambi la base ottima. In particolare vengono considerate la \textbf{condizioni di ammissibilità} (che dipendono solo da $b$) e la \textbf{condizione di ottimalità} (che dipendono solo da $c$).
 \subsubsection{Condizioni di ammissibilità e condizioni di ottimalità}
 \subsection{Variazione del coefficiente $b_i$ e del coefficiente $c_i$}
 \subsection{Analisi parametrica}
@@ -210,6 +210,61 @@ L'algoritmo del simplesso duale è applicato principalmente quando la base inizi
 \subsubsection{Criterio del punto utopia}
 \subsubsection{Criterio degli standard}
 
+\section{Programmazione lineare intera}
+\subsection{Ottimizzazione nel discreto}
+Esistono diverse classi di problemi di ottimizzazione con variabili discrete, in particolare \emph{integer programming}, \emph{binary programming}, \emph{mixed-integer programming}, \emph{combinatorial optimizazion}. Noi considereremo solo modelli lineari \textbf{integer linear programming}.
+La risoluzione di questi problemi prevede:
+\begin{itemize}
+\item selezione di formulazioni lineari, e poi migliorarle fino a poter risolvere il problema di PLI come un problema di PL.
+\item componendo il problema in sotto-problemi più semplici
+\item eseguendo una enumerazione implicita delle soluzioni.
+\end{itemize}
+\subsection{Ottimalità}
+L'ottimalità di un problema di ottimizzazione discreta $P$ è calcolata calcolando un upper bound ed un lower bound. \begin{itemize}
+\item se il problema è di minimizzazione l'upper bound è il primale e il lower bound è il duale
+\item se il problema è di massimizzazione il lower bound è il duale ed il lower bound è il primale
+\end{itemize}
+La differenza tra l'upper bound ed il lower bound è chiamato gap di ottimalità e se la loro differenza è $0$, si dice che abbiamo la \emph{garanzia di ottimalità}
+
+\subsection{Bounds primali e duali}
+I bound primali sono dati dai valori della funzione obbiettivo in una qualsiasi soluzione ammissibile. I, bound duale sono dati dal valore della funzione obbiettivo in corrispondenza di una soluzione super-ottima (in generale quindi la soluzione non è ammissibile).
+\subsection{Rilassamento}
+Dato un problema:
+\begin{center}
+	$P = min(z_P(x) : x \in X(P)$\\
+	$R = min(z_R(x) : x \in X(R)$
+\end{center} 
+E' un rilassamento di $P$ se valgono 2 condizioni:
+\begin{itemize}
+\item $X(P) \subseteq X(R)$
+\item $z_R(x) \leq z_P(x)$ $\forall  x \in X(P)$
+\end{itemize}
+
+I rilassamento possono essere:
+\begin{itemize}
+\item rilassamento lineare continuo, a partire da un problema discreto, si passa ad un altro problema trascurando le condizioni di integralità.
+\item rilassamento combinatori, a partire da un problema combinatorio, si passa ad un'altro problema di ottimizzazione combinatoria, ma tipicamente più facile da risolvere
+\item rilassamento Lagrangeano, a partire da un problema discreto, si rimuovono alcuni vincoli aggiungendo tuttavia all'obbiettivo termini di penalità.
+\item rilassamento surrogato, a partire da un problema discreto, si sostituiscono un insieme di vincoli con una oro combinazione convessa.
+\end{itemize}
+\subsection{Dualità}
+Come seconda tecnica per ottenere un bound duale possiamo calcolare una soluzione ammissibile per il problema duale $P$ o il duale di un suo rilassamento.
+
+\subsection{Formulazioni}
+I problemi di ottimizzazione lineare discreti non hanno formulazioni unica, ha quindi senso confrontare, e migliorare formulazioni in quanto una formulazione migliore si traduce in algoritmo più efficiente.
+Una formulazione è considerata ideale se consente di risolvere il problema di programmazione lineare discreta come se fosse un problema di programmazione lineare nel continuo.\\
+
+La formulazione di un problema corrisponde ad un poliedro, e la formulazione ideale corrisponde al guscio convesso delle soluzioni intere.
+
+\subsubsection{Guscio convesso  /  convex hull}
+Dato un insieme discreto, il guscio convesso è un poliedro i cui punti estremi sono elementi dell'insieme discreto di $X$. Possiamo inoltre dire che:
+\begin{center}
+$X \subseteq conv(X) \subseteq P$
+\end{center}
+
+%\subsubsection{Formulazioni speciali}
+%E' talvolta possibile (bin packing problem, facility location problem, etc.) che compaiono vincoli di che esprimono condizioni logiche che legano le variabili $x$ e $y$ (if, then). 
+% ignored, molta matematica, solitamente ci sceglie la formulazione numero 2.
 \section{Modelli di ottimizzazione discreta}
 Le variabili nei problemi di ottimizzazione rappresentano quantità, che possono essere continue o discrete. In altri casi invece le variabili non rappresentano quantità, e quindi non hanno un'unità di misura e non ammettono approssimazioni.
 
